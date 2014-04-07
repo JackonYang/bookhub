@@ -19,6 +19,9 @@ class MongodbHandler():
         else:
             return self._checkConnection()
 
+    def get_db(self, name):
+        return self.db[name]
+
     def disconnect(self):
         if self._checkConnection():
             self.db.disconnect()
