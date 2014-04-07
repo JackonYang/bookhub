@@ -1,5 +1,6 @@
 #coding: utf-8
 import wx
+import thread
 from book_scan import BookScan
 
 
@@ -34,7 +35,8 @@ class ScanFrame(wx.Frame):
         self.stopBtn.Bind(wx.EVT_BUTTON, self.OnStopScan)
 
     def _out_scan(self, cnt):
-        print '%s files scanned' % cnt
+        pass
+        #print '%s files scanned' % cnt
 
     def _out_debug(self, msg):
         self.text.AppendText(msg + '\n')
@@ -47,9 +49,7 @@ class ScanFrame(wx.Frame):
             self.text.SetValue('')
         dlg = wx.DirDialog(self, "Choose a directory:")
         if dlg.ShowModal() == wx.ID_OK:
-            self.scan.scan_path(dlg.GetPath())
-            self.startBtn.Enable()
-            self.stopBtn.Disable()
+            wx.CallAfter(self.scan.scan_path, dlg.GetPath())
 
     def OnStopScan(self, event):
         if self.scan:
