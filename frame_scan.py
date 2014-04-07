@@ -1,17 +1,16 @@
 #coding: utf-8
 import wx
-import thread
-from book_scan import BookScan
+from file_repo import FileRepo
 
 
 class ScanFrame(wx.Frame):
 
-    def __init__(self):
+    def __init__(self, db):
         wx.Frame.__init__(self, parent=None, title="Scan Books",
                           pos=(100, 100), size=(1180, 600))
         self.buildUI()
         self.CenterOnScreen()
-        self.scan = BookScan(self._out_scan, self._out_debug)
+        self.repo = FileRepo(db, self._out_scan, self._out_debug)
 
     def buildUI(self):
         self.box1 = wx.BoxSizer(wx.HORIZONTAL)
@@ -49,19 +48,22 @@ class ScanFrame(wx.Frame):
             self.text.SetValue('')
         dlg = wx.DirDialog(self, "Choose a directory:")
         if dlg.ShowModal() == wx.ID_OK:
-            wx.CallAfter(self.scan.scan_path, dlg.GetPath())
+            wx.CallAfter(self.repo.add_books, dlg.GetPath())
 
     def OnStopScan(self, event):
-        if self.scan:
-            self.scan.stop_scan()
-            self.startBtn.Enable()
-            self.stopBtn.Disable()
+        pass
 
 
 class TestApp(wx.App):
 
     def OnInit(self):
-        frame = ScanFrame()
+
+        from settings import db_host, db_port, db_name
+        from lib.mongo_hdlr import MongodbHandler
+        mongo = MongodbHandler()
+        mongo.connect(db_host, db_port)
+        db = mongo.get_db(db_name)
+        frame = ScanFrame(db)
         frame.Show(True)
         self.SetTopWindow(frame)
         return True
