@@ -3,7 +3,6 @@ import wx
 
 from lib.ObjectListView import ObjectListView, ColumnDefn
 from lib.ObjectListView import Filter
-from file_repo import FileRepo
 from lib.util import open_file
 
 
@@ -71,8 +70,7 @@ class OverViewFrame(wx.Frame):
             olv.SetFilter(Filter.TextSearch(olv, olv.columns[0:4]))
 
     def OnOpenFile(self, event):
-        obj = self.myOlv.GetSelectedObject()
-        open_file(self.repo.get_filepath(obj))
+        self.repo.open_book(self.myOlv.GetSelectedObject())
 
     def OnKeyDown(self, event):
         objs = self.myOlv.GetSelectedObjects()
@@ -112,12 +110,9 @@ class OverViewFrame(wx.Frame):
 class TestApp(wx.App):
 
     def OnInit(self):
-        from settings import db_host, db_port, db_name
-        from lib.mongo_hdlr import MongodbHandler
-        mongo = MongodbHandler()
-        mongo.connect(db_host, db_port)
-        db = mongo.get_db(db_name)
-        repo = FileRepo(db)
+        from media_repo import install_repo
+        from settings import media_path
+        repo = install_repo(media_path)
         frame = OverViewFrame(repo)
         self.SetTopWindow(frame)
         frame.Show()
