@@ -4,7 +4,7 @@ import threading
 import os
 import settings
 import lib.util as util
-from media_repo import install_repo
+from media_repo import MediaRepo
 
 
 class FileScan(threading.Thread):
@@ -16,8 +16,7 @@ class FileScan(threading.Thread):
         self.ignore_hidden = settings.ignore_hidden
         self.ext_pool = settings.ext_pool
 
-        repo = install_repo(settings.media_path, settings.db_host, settings.db_port, settings.db_name)
-        self.file_hdlr = repo.add_book
+        self.file_hdlr = MediaRepo().add_book
         self.tar_path = tar_path 
         self.window = window
         self.cnt_scanned = 0

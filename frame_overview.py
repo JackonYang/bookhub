@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
-import wx
+"""
+Required: MediaRepo
++get_booklist()
++open_book(BookMetaObj)
 
+"""
+import wx
 from lib.ObjectListView import ObjectListView, ColumnDefn
 from lib.ObjectListView import Filter
-from lib.util import open_file
 
 
 class OverViewFrame(wx.Frame):
     def __init__(self, repo):
         FrameStyle = wx.CAPTION | wx.RESIZE_BORDER | wx.SYSTEM_MENU |\
-                        wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX | wx.CLOSE_BOX
-        wx.Frame.__init__(self, parent=None, id=wx.ID_ANY, title="Flat File Explorer", pos=(100, 100), size=(500,600), style=FrameStyle)
+            wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX | wx.CLOSE_BOX
+        wx.Frame.__init__(self, parent=None, id=-1, title="BookHub",
+                          pos=(100, 100), size=(500, 600), style=FrameStyle)
 
         self.repo = repo
         self.InitModel()
-        self.InitWidgets()
+        self.BuildUI()
         self.InitObjectListView()
         self.InitSearchCtrls()
         self.CenterOnScreen()
@@ -22,17 +27,18 @@ class OverViewFrame(wx.Frame):
     def InitModel(self):
         self.elements = self.repo.get_booklist()
 
-    def InitWidgets(self):
+    def BuildUI(self):
         panel = wx.Panel(self, -1)
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_1.Add(panel, 1, wx.ALL|wx.EXPAND)
+        sizer_1.Add(panel, 1, wx.ALL | wx.EXPAND)
         self.SetSizer(sizer_1)
 
         sizer_2 = wx.BoxSizer(wx.VERTICAL)
         self.SearchFile = wx.SearchCtrl(panel)
-        sizer_2.Add(self.SearchFile, 1, wx.ALL|wx.EXPAND, 2)
-        self.myOlv = ObjectListView(panel, -1, style=wx.LC_REPORT|wx.SUNKEN_BORDER)
-        sizer_2.Add(self.myOlv, 20, wx.ALL|wx.EXPAND, 4)
+        sizer_2.Add(self.SearchFile, 1, wx.ALL | wx.EXPAND, 2)
+        self.myOlv = ObjectListView(panel, -1,
+                                    style=wx.LC_REPORT | wx.SUNKEN_BORDER)
+        sizer_2.Add(self.myOlv, 20, wx.ALL | wx.EXPAND, 4)
 
         # self.BtnAddPath = wx.Button(panel, -1, 'select path to add files')
         # sizer_2.Add(self.BtnAddPath, 1, wx.ALL|wx.EXPAND, 2)
@@ -40,17 +46,20 @@ class OverViewFrame(wx.Frame):
 
         self.Layout()
 
-        self.myOlv.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnOpenFile)  # dlick to open a file
+        self.myOlv.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnOpenFile)
         self.myOlv.Bind(wx.EVT_LIST_KEY_DOWN, self.OnKeyDown)
         # self.Bind(wx.EVT_BUTTON, self.OnAddPath, self.BtnAddPath)
 
     def InitObjectListView(self):
         self.myOlv.SetColumns([
-            ColumnDefn("Title", "left", 330, "get_dispname", stringConverter='%s', valueSetter='set_dispname'),
-            ColumnDefn("Language", "left", 80, "get_book_language", stringConverter='%s', isEditable=False),
-            ColumnDefn("Size (MB)", "center", 80, "get_sizeInMb", stringConverter='%.1f', isEditable=False),
-            ColumnDefn("MD5", "center", 320, "md5", stringConverter='%s', isEditable=False),
-            # ColumnDefn("Raw File Name", "left", 420, "get_rawname", stringConverter='%s', isEditable=False),
+            ColumnDefn("Title", "left", 330, "get_dispname",
+                       stringConverter='%s', valueSetter='set_dispname'),
+            ColumnDefn("Language", "left", 80, "get_book_language",
+                       stringConverter='%s', isEditable=False),
+            ColumnDefn("Size (MB)", "center", 80, "get_sizeInMb",
+                       stringConverter='%.1f', isEditable=False),
+            ColumnDefn("MD5", "center", 320, "md5",
+                       stringConverter='%s', isEditable=False),
         ])
         self.myOlv.SetObjects(self.elements)
         self.myOlv.cellEditMode = ObjectListView.CELLEDIT_SINGLECLICK
@@ -58,9 +67,10 @@ class OverViewFrame(wx.Frame):
     def InitSearchCtrls(self):
         """Initialize the search controls"""
         for (searchCtrl, olv) in [(self.SearchFile, self.myOlv)]:
-            # Use default parameters to pass extra information to the event handler
+
             def _handleText(evt, searchCtrl=searchCtrl, olv=olv):
                 self.OnTextSearchCtrl(evt, searchCtrl, olv)
+
             def _handleCancel(evt, searchCtrl=searchCtrl, olv=olv):
                 self.OnCancelSearchCtrl(evt, searchCtrl, olv)
 
@@ -110,9 +120,8 @@ class OverViewFrame(wx.Frame):
 class TestApp(wx.App):
 
     def OnInit(self):
-        from media_repo import install_repo
-        from settings import media_path
-        repo = install_repo(media_path)
+        from media_repo import MediaRepo
+        repo = MediaRepo()
         frame = OverViewFrame(repo)
         self.SetTopWindow(frame)
         frame.Show()
