@@ -6,7 +6,7 @@ import pymongo
 import lib.util as util
 import settings
 
-param_template = [('media_path', None),
+param_template = [('REPO_PATH', None),
                   ('host', 'localhost'),
                   ('port', '27017'),
                   ('db_name', 'bookhub'),
@@ -18,7 +18,8 @@ class MediaRepo:
     def __init__(self):
         params = {k: getattr(settings, k, v) for k, v in param_template}
         # running mode detect by media_path
-        self.repo_path = params['media_path']
+        self.repo_path = params['REPO_PATH'] or ''
+        self.hasRepo = os.path.exists(self.repo_path)
 
         # connect to db
         self.conn = pymongo.Connection(params['host'], int(params['port']))
@@ -29,6 +30,7 @@ class MediaRepo:
         self.conn = None
         self.db = None
         self.repo_path = None
+        self.hasRepo = None
 
     def get_booklist(self):
         return [BookMeta(meta_info) for meta_info in self.db.book.find()]
@@ -37,21 +39,39 @@ class MediaRepo:
         self.db.book.update({'md5': md5}, setter, upsert)
 
     def open_book(self, meta_obj):
-        if self.repo_path:
-            bookpath = os.path.join(self.repo_path, meta_obj.get_filename())
+        if self.hasRepo:
+            return util.open_file(os.path.join(self.repo_path, meta_obj.get_filename()))
         else:
-            res = self.db.bookpath.find_one({'md5': meta_obj.md5},
-                                            {'orig_path': 1, '_id': 0})
-            bookpath = res['orig_path'].pop()
-        util.open_file(bookpath)
+            res = self.db.history.find_one({'md5': meta_obj.md5},
+                                           {'path': 1, '_id': 0})
+            if res and 'path' in res:
+                for bookpath in res['path']:
+                    if os.path.exists(bookpath):
+                        return util.open_file(bookpath)
+        return None
 
     def add_book(self, src_path, file_meta):
         # rawname, ext in file_meta
         if 'md5' not in file_meta:
             file_meta['md5'] = util.md5_for_file(src_path)
 
-        if self.repo_path:
-            # copy file to meta_path named md5.ext
+        # book meta info
+        file_meta.update({'size_in_bytes': os.path.getsize(src_path)})
+        rawname = file_meta.pop("rawname").pop()
+        setter = {"$set": file_meta,
+                  "$addToSet": {"rawname": rawname},
+                  }
+        self.update_meta(file_meta['md5'], setter, True)
+
+        # operate history
+        self.db.history.update({'md5': file_meta['md5']},
+                               {'$addToSet': {'path': src_path,
+                                              'scan_time': time.time(),
+                                              }},
+                               True)  # upsert
+
+        # copy file if has repo
+        if self.hasRepo:
             dst_file = os.path.join(self.repo_path,
                                     '%(md5)s%(ext)s' % file_meta)
             if not os.path.exists(dst_file):
@@ -59,19 +79,6 @@ class MediaRepo:
                     shutil.copy(src_path, dst_file)
                 except:
                     pass
-        else:
-            self.db.bookpath.update({'md5': file_meta['md5']},
-                                    {'$addToSet': {'orig_path': src_path}},
-                                    True)
-
-        file_meta.update({'size_in_bytes': os.path.getsize(src_path),
-                          'init_time': time.time()
-                          })
-
-        setter = {"$set": file_meta,
-                  "$addToSet": {"rawname": file_meta.pop("rawname").pop()}
-                  }
-        self.update_meta(file_meta['md5'], setter, True)
         return 1
 
 
