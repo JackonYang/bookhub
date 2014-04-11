@@ -26,7 +26,7 @@ class FileScan(threading.Thread):
 
     def run(self):
         cnt_found = self.scan_path(self.tar_path)
-        self.window.scan_stopped(self.tar_path, cnt_found, self.cnt_scanned)
+        wx.CallAfter(self.window.scan_stopped, self.tar_path, cnt_found, self.cnt_scanned)
 
     def scan_path(self, src_path):
         """scan path to detect target files
