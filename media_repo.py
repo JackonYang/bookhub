@@ -43,7 +43,6 @@ class MediaRepo:
             res = self.db.bookpath.find_one({'md5': meta_obj.md5},
                                             {'orig_path': 1, '_id': 0})
             bookpath = res['orig_path'].pop()
-            print bookpath
         util.open_file(bookpath)
 
     def add_book(self, src_path, file_meta):
