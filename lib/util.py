@@ -36,6 +36,7 @@ def open_file(filename):
         os.startfile(filename)
     else:
         subprocess.call((platform_cmd.get(sys.platform, 'xdg-open'), filename))
+    return True
 
 
 def is_hiden(filepath):

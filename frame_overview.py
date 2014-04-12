@@ -9,6 +9,12 @@ import wx
 from lib.ObjectListView import ObjectListView, ColumnDefn
 from lib.ObjectListView import Filter
 
+showlist = ['title', 'language', 'size', 'md5']
+cols = {'title': ColumnDefn("Title", "left", 330, "get_dispname", stringConverter='%s', valueSetter='set_dispname'),
+        'language': ColumnDefn("Language", "center", 80, "get_book_language", stringConverter='%s', isEditable=False),
+        'size': ColumnDefn("Size", "right", 80, "get_sizeInMb", stringConverter='%.1f MB', isEditable=False),
+        'md5': ColumnDefn("MD5", "center", 320, "md5", stringConverter='%s', isEditable=False),
+        }
 
 class OverViewFrame(wx.Frame):
     def __init__(self, repo):
@@ -17,51 +23,28 @@ class OverViewFrame(wx.Frame):
         wx.Frame.__init__(self, parent=None, id=-1, title="BookHub",
                           pos=(100, 100), size=(500, 600), style=FrameStyle)
 
-        self.repo = repo
-        self.InitModel()
         self.BuildUI()
-        self.InitObjectListView()
+        self.InitObjectListView(repo)
         self.InitSearchCtrls()
-        self.CenterOnScreen()
-
-    def InitModel(self):
-        self.elements = self.repo.get_booklist()
 
     def BuildUI(self):
-        panel = wx.Panel(self, -1)
-        sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_1.Add(panel, 1, wx.ALL | wx.EXPAND)
-        self.SetSizer(sizer_1)
-
-        sizer_2 = wx.BoxSizer(wx.VERTICAL)
-        self.SearchFile = wx.SearchCtrl(panel)
-        sizer_2.Add(self.SearchFile, 1, wx.ALL | wx.EXPAND, 2)
-        self.myOlv = ObjectListView(panel, -1,
+        self.SearchFile = wx.SearchCtrl(self)
+        self.myOlv = ObjectListView(self, -1,
                                     style=wx.LC_REPORT | wx.SUNKEN_BORDER)
-        sizer_2.Add(self.myOlv, 20, wx.ALL | wx.EXPAND, 4)
-
-        # self.BtnAddPath = wx.Button(panel, -1, 'select path to add files')
-        # sizer_2.Add(self.BtnAddPath, 1, wx.ALL|wx.EXPAND, 2)
-        panel.SetSizer(sizer_2)
-
+        size_main = wx.BoxSizer(wx.VERTICAL)
+        size_main.Add(self.SearchFile, 1, wx.ALL | wx.EXPAND, 2)
+        size_main.Add(self.myOlv, 20, wx.ALL | wx.EXPAND, 4)
+        self.SetSizer(size_main)
         self.Layout()
+        self.CenterOnScreen()
 
         self.myOlv.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnOpenFile)
         self.myOlv.Bind(wx.EVT_LIST_KEY_DOWN, self.OnKeyDown)
-        # self.Bind(wx.EVT_BUTTON, self.OnAddPath, self.BtnAddPath)
 
-    def InitObjectListView(self):
-        self.myOlv.SetColumns([
-            ColumnDefn("Title", "left", 330, "get_dispname",
-                       stringConverter='%s', valueSetter='set_dispname'),
-            ColumnDefn("Language", "left", 80, "get_book_language",
-                       stringConverter='%s', isEditable=False),
-            ColumnDefn("Size (MB)", "center", 80, "get_sizeInMb",
-                       stringConverter='%.1f', isEditable=False),
-            ColumnDefn("MD5", "center", 320, "md5",
-                       stringConverter='%s', isEditable=False),
-        ])
-        self.myOlv.SetObjects(self.elements)
+    def InitObjectListView(self, repo):
+        self.repo = repo
+        self.myOlv.SetColumns([cols[k.lower()] for k in showlist])
+        self.myOlv.SetObjects(self.repo.get_booklist())
         self.myOlv.cellEditMode = ObjectListView.CELLEDIT_SINGLECLICK
 
     def InitSearchCtrls(self):
@@ -80,7 +63,8 @@ class OverViewFrame(wx.Frame):
             olv.SetFilter(Filter.TextSearch(olv, olv.columns[0:4]))
 
     def OnOpenFile(self, event):
-        self.repo.open_book(self.myOlv.GetSelectedObject())
+        if not self.repo.open_book(self.myOlv.GetSelectedObject()):
+            dlg = wx.MessageBox('File not exists', 'Bookhub Message')
 
     def OnKeyDown(self, event):
         objs = self.myOlv.GetSelectedObjects()
