@@ -25,18 +25,14 @@ def md5_for_file(filename, block_size=256*128, hr=True):
     return md5.digest()
 
 
-def open_file(filename):
+def cmd_open_file(filename):
     platform_cmd = {
         'win32': 'start',  # win7 32bit, win7 64bit
         'cygwin': 'start',  # cygwin
         'linux2': 'xdg-open',  # ubuntu 12.04 64bit
         'darwin': 'open',  # Mac
     }
-    if sys.platform.startswith('win'):  # windows
-        os.startfile(filename)
-    else:
-        subprocess.call((platform_cmd.get(sys.platform, 'xdg-open'), filename))
-    return True
+    return '%s %s' % (platform_cmd[sys.platform], filename)
 
 
 def is_hiden(filepath):
@@ -45,6 +41,7 @@ def is_hiden(filepath):
             & win32con.FILE_ATTRIBUTE_HIDDEN
     else:  # linux
         return os.path.basename(filepath).startswith('.')
+
 
 def getSizeInNiceString(sizeInBytes):
     """ Convert the given byteCount into a string like: 9.9bytes/KB/MB/GB

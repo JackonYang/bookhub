@@ -37,17 +37,16 @@ class MediaRepo:
     def update_meta(self, md5, setter, upsert=False):
         self.db.book.update({'md5': md5}, setter, upsert)
 
-    def open_book(self, meta_obj):
+    def getFilePath(self, meta_obj):
         if self.hasRepo:
-            return util.open_file(os.path.join(self.repo_path, meta_obj.get_filename()))
+            return os.path.join(self.repo_path, meta_obj.get_filename())
         else:
             res = self.db.history.find_one({'md5': meta_obj.md5},
                                            {'path': 1, '_id': 0})
-            if res and 'path' in res:
-                for bookpath in res['path']:
-                    if os.path.exists(bookpath):
-                        return util.open_file(bookpath)
-        return None
+            for bookpath in res.get('path', []):
+                if os.path.exists(bookpath):
+                    return bookpath
+        return None  # file not exists
 
     def add_book(self, src_path, file_meta):
         # rawname, ext in file_meta

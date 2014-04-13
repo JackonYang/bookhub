@@ -8,6 +8,8 @@ Required: MediaRepo
 import wx
 from lib.ObjectListView import ObjectListView, ColumnDefn
 from lib.ObjectListView import Filter
+import lib.util as util
+import subprocess
 
 showlist = ['title', 'language', 'size', 'md5']
 cols = {'title': ColumnDefn("Title", "left", 330, "get_dispname", stringConverter='%s', valueSetter='set_dispname'),
@@ -63,8 +65,15 @@ class OverViewFrame(wx.Frame):
             olv.SetFilter(Filter.TextSearch(olv, olv.columns[0:4]))
 
     def OnOpenFile(self, event):
-        if not self.repo.open_book(self.myOlv.GetSelectedObject()):
-            dlg = wx.MessageBox('File not exists', 'Bookhub Message')
+        obj = self.myOlv.GetSelectedObject()
+        path = self.repo.getFilePath(obj)
+        if path is None:
+            wx.MessageBox('File not exists', 'Bookhub Message')
+            return
+        cmd = util.cmd_open_file(path)
+        res = subprocess.call(cmd, shell=True)
+        if res != 0:
+            wx.MessageBox('Open File Error. returncode %s' % res, 'Bookhub Message')
 
     def OnKeyDown(self, event):
         objs = self.myOlv.GetSelectedObjects()
