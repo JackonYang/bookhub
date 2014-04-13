@@ -12,7 +12,7 @@ from lib.ObjectListView import Filter
 showlist = ['title', 'language', 'size', 'md5']
 cols = {'title': ColumnDefn("Title", "left", 330, "get_dispname", stringConverter='%s', valueSetter='set_dispname'),
         'language': ColumnDefn("Language", "center", 80, "get_book_language", stringConverter='%s', isEditable=False),
-        'size': ColumnDefn("Size", "right", 80, "get_sizeInMb", stringConverter='%.1f MB', isEditable=False),
+        'size': ColumnDefn("Size", "right", 80, "getSizeString", stringConverter='%s', isEditable=False),
         'md5': ColumnDefn("MD5", "center", 320, "md5", stringConverter='%s', isEditable=False),
         }
 

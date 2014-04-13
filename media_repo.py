@@ -4,8 +4,7 @@ import time
 import shutil
 import pymongo
 import lib.util as util
-import settings
-
+import settings 
 param_template = [('REPO_PATH', None),
                   ('host', 'localhost'),
                   ('port', '27017'),
@@ -102,8 +101,9 @@ class BookMeta:
         self.meta['dispname'] = dispname
         MediaRepo().update_meta(self.md5, {"$set": {"dispname": dispname}})
 
-    def get_sizeInMb(self):
-        return self.meta.get('size_in_bytes', 0) / (1024.0*1024.0)
+    def getSizeString(self):
+        return util.getSizeInNiceString(self.meta.get('size_in_bytes', 0))
+
 
     def get_book_language(self):
         return self.meta.get('language', '')
