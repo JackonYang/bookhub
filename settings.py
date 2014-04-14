@@ -1,8 +1,8 @@
 # -*- coding: utf-8-*-
 # connection
-media_path = None
-db_host = "localhost"
-db_port = 27017
+REPO_PATH = None
+host = "localhost"
+port = 27017
 db_name = 'bookhub'
 
 # scan configs
