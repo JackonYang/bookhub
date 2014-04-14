@@ -39,13 +39,13 @@ class MediaRepo:
 
     def getFilePath(self, meta_obj):
         if self.hasRepo:
-            return os.path.join(self.repo_path, meta_obj.get_filename())
+            paths = [os.path.join(self.repo_path, meta_obj.get_filename())]
         else:
-            res = self.db.history.find_one({'md5': meta_obj.md5},
-                                           {'path': 1, '_id': 0})
-            for bookpath in res.get('path', []):
-                if os.path.exists(bookpath):
-                    return bookpath
+            paths = self.db.history.find_one({'md5': meta_obj.md5},
+                                           {'path': 1, '_id': 0}).get('path', [])
+        for bookpath in paths:
+            if os.path.exists(bookpath):
+                return bookpath
         return None  # file not exists
 
     def add_book(self, src_path, file_meta):
