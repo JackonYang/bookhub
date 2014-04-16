@@ -6,6 +6,13 @@ import settings
 import lib.util as util
 from media_repo import MediaRepo
 
+def add_file(src_path, file_meta):
+    repo = MediaRepo()
+    repo.add_bookinfo(file_meta)
+    repo.add_history(file_meta['md5'], src_path)
+    return 1
+
+
 
 class FileScan(threading.Thread):
 
@@ -16,7 +23,7 @@ class FileScan(threading.Thread):
         self.ignore_hidden = settings.ignore_hidden
         self.ext_pool = settings.ext_pool
 
-        self.file_hdlr = MediaRepo().add_book
+        self.file_hdlr = add_file
         self.tar_path = tar_path 
         self.window = window
         self.cnt_scanned = 0
