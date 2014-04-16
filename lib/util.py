@@ -32,7 +32,7 @@ def cmd_open_file(filename):
         'linux2': 'xdg-open',  # ubuntu 12.04 64bit
         'darwin': 'open',  # Mac
     }
-    return '%s %s' % (platform_cmd[sys.platform], filename)
+    return "%s '%s'" % (platform_cmd[sys.platform], filename)
 
 
 def is_hiden(filepath):
