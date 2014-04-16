@@ -93,7 +93,7 @@ class BookMeta:
         MediaRepo().update_meta(self.md5, {"$set": {"dispname": dispname}})
 
     def getSizeString(self):
-        return util.getSizeInNiceString(self.meta.get('size_in_bytes', 0))
+        return util.getSizeInNiceString(self.meta.get('bytes', 0))
 
     def get_book_language(self):
         return self.meta.get('language', '')

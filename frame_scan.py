@@ -13,7 +13,6 @@ def add_file(src_path, file_meta):
     return 1
 
 
-
 class FileScan(threading.Thread):
 
     def __init__(self, tar_path, window):
@@ -49,6 +48,7 @@ class FileScan(threading.Thread):
             file_meta = {'rawname': [rawname],
                          'ext': ext,
                          'md5': util.md5_for_file(src_path),
+                         'bytes': os.path.getsize(src_path),
                          }
             wx.CallAfter(self.window.file_found, src_path, file_meta['md5'])
             return self.file_hdlr(src_path, file_meta) or 0
