@@ -10,6 +10,7 @@ def add_file(src_path, file_meta):
     repo = MediaRepo()
     repo.add_bookinfo(file_meta)
     repo.add_history(file_meta['md5'], src_path)
+    repo.add_file(src_path, file_meta)
     return 1
 
 

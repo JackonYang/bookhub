@@ -1,5 +1,6 @@
 # -*- coding: utf-8-*-
 import os
+import shutil
 import pymongo
 import lib.util as util
 import settings
@@ -16,6 +17,8 @@ class MediaRepo:
         params = {k: getattr(settings, k, v) for k, v in param_template}
         # running mode detect by media_path
         self.repo_path = params['REPO_PATH'] or ''
+        if self.repo_path is not None and (not os.path.exists(self.repo_path)):
+            os.makedirs(self.repo_path)
         self.hasRepo = os.path.exists(self.repo_path)
 
         # connect to db
@@ -70,6 +73,15 @@ class MediaRepo:
                   }
         self.update_history(md5, setter, True)
         return 1
+
+    def add_file(self, srcPath, metaInfo):
+        filename = metaInfo['md5'] + metaInfo['ext']
+        dstfile = os.path.join(self.repo_path, filename)
+        if self.hasRepo and not os.path.exists(dstfile):
+            try:
+                shutil.copy(srcPath, dstfile)
+            except:
+                print 'error'
 
 
 class BookMeta:
