@@ -12,7 +12,7 @@ app.on('ready', function () {
     mainWindow = new BrowserWindow({});
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'mainWindow.html'),
+        pathname: path.join(__dirname, 'html/mainWindow.html'),
         protocol: 'file:',
         slashes: true,
     }));
@@ -28,15 +28,15 @@ app.on('ready', function () {
 });
 
 // handle AddBooks Window
-function craeteAddBooksWindows() {
+function createAddBooksWindows() {
     addBooksWindow = new BrowserWindow({
-        width: 600,
-        height: 400,
+        width: 960,
+        height: 700,
         title: 'Add Books to Repo'
     });
 
     addBooksWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'addBooksWindow.html'),
+        pathname: path.join(__dirname, 'html/addBooksWindow.html'),
         protocol: 'file:',
         slashes: true,
     }));
@@ -59,8 +59,16 @@ const mainMenuTemplate = [
         submenu: [
             {
                 label: 'Add Books',
+                accelerator: process.platform == 'darwin' ? 'Command+N' : 'Ctrl+N',
                 click() {
-                    craeteAddBooksWindows();
+                    createAddBooksWindows();
+                }
+            },
+            {
+                label: 'Close Current Window',
+                accelerator: process.platform == 'darwin' ? 'Command+W' : 'Ctrl+W',
+                click(item, focusedWindow) {
+                    focusedWindow.close();
                 }
             },
             {
