@@ -2,7 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let mainWindow;
 let addBooksWindow;
@@ -46,6 +46,11 @@ function craeteAddBooksWindows() {
     })
 }
 
+// catch folder scan
+ipcMain.on('folder:to_scan', function (e, folder) {
+    book_title = path.join(folder, 'hello-world.pdf'),
+    addBooksWindow.webContents.send('book:found', book_title);
+})
 
 // Create menu template
 const mainMenuTemplate = [
