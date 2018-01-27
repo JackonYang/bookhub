@@ -9,7 +9,13 @@ let addBooksWindow;
 
 // Listen for appp to be ready
 app.on('ready', function () {
-    mainWindow = new BrowserWindow({});
+    var electronScreen = electron.screen;
+    var size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+    mainWindow = new BrowserWindow({
+        width: size.width,
+        height: size.height,
+    });
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'html/mainWindow.html'),
@@ -49,7 +55,7 @@ function createAddBooksWindows() {
 // catch folder scan
 ipcMain.on('folder:to_scan', function (e, folder) {
     book_title = path.join(folder, 'hello-world.pdf'),
-    addBooksWindow.webContents.send('book:found', book_title);
+        addBooksWindow.webContents.send('book:found', book_title);
 })
 
 // Create menu template
