@@ -1,0 +1,14 @@
+{
+  "name": "bookhub",
+  "version": "1.0.0",
+  "description": "book management and sharing",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Jackon Yang",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.7.11"
+  }
+}
