@@ -7,7 +7,7 @@ const { app, BrowserWindow, Menu, ipcMain } = electron;
 let mainWindow;
 let addBooksWindow;
 
-// Listen for appp to be ready
+// Listen for app to be ready
 app.on('ready', function () {
     var electronScreen = electron.screen;
     var size = electronScreen.getPrimaryDisplay().workAreaSize;
