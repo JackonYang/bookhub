@@ -64,5 +64,8 @@ app/style.css.map
 dist
 dll
 
+# react
+built
+
 .idea
 npm-debug.log.*

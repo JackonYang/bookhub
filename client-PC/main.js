@@ -5,24 +5,25 @@ const path = require('path');
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let mainWindow;
-let addBooksWindow;
 
 // Listen for app to be ready
 app.on('ready', function () {
+
     var electronScreen = electron.screen;
     var size = electronScreen.getPrimaryDisplay().workAreaSize;
 
+    // Create main window
     mainWindow = new BrowserWindow({
         width: size.width,
         height: size.height,
     });
 
+    // Load html into window
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'html/mainWindow.html'),
+        pathname: path.join(__dirname, 'public/index.html'),
         protocol: 'file:',
         slashes: true,
     }));
-
     // Quit app when closed
     mainWindow.on('closed', function () {
         app.quit();
@@ -33,43 +34,11 @@ app.on('ready', function () {
     Menu.setApplicationMenu(mainMenu);
 });
 
-// handle AddBooks Window
-function createAddBooksWindows() {
-    addBooksWindow = new BrowserWindow({
-        width: 960,
-        height: 700,
-        title: 'Add Books to Repo'
-    });
 
-    addBooksWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'html/addBooksWindow.html'),
-        protocol: 'file:',
-        slashes: true,
-    }));
-    // Garbage collection handle
-    addBooksWindow.on('close', function () {
-        addBooksWindow = null;
-    })
-}
-
-// catch folder scan
-ipcMain.on('folder:to_scan', function (e, folder) {
-    book_title = path.join(folder, 'hello-world.pdf'),
-        addBooksWindow.webContents.send('book:found', book_title);
-})
-
-// Create menu template
 const mainMenuTemplate = [
     {
         label: 'File',
         submenu: [
-            {
-                label: 'Add Books',
-                accelerator: process.platform == 'darwin' ? 'Command+N' : 'Ctrl+N',
-                click() {
-                    createAddBooksWindows();
-                }
-            },
             {
                 label: 'Close Current Window',
                 accelerator: process.platform == 'darwin' ? 'Command+W' : 'Ctrl+W',
