@@ -46,12 +46,38 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				loader: 'style-loader!css-loader'
+				oneOf: [{
+			    resourceQuery: /^\?raw$/,
+			    use: [
+		        require.resolve('style-loader'),
+		        require.resolve('css-loader')
+			    ]
+				}, {
+			    use: [
+		        require.resolve('style-loader'),
+		        {
+	            loader: require.resolve('css-loader'),
+	            options: {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+	            }
+		        },
+			    ]
+				}]
+				// loader: 'style-loader!css-loader?modules&localIdentName=[name]__[local]-[hash:base64:5]'
 			},
 			{
-				test: /\.less$/,
-				loader: 'style-loader!css-loader!less-loader'
-			}
+				test: /\.scss$/,
+				loader: 'style-loader!css-loader?modules&localIdentName=[name]__[local]-[hash:base64:5]!sass-loader'
+			},
+			{
+			  test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+			  loader: 'url-loader',
+			  options: {
+			    limit: 10000,
+			  }
+			},
 		]
 	},
 	plugins: [

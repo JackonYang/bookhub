@@ -18,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^1.7.12",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
@@ -34,7 +35,10 @@
     "eslint-import-resolver-webpack": "^0.8.4",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
     "style-loader": "^0.20.1",
+    "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   }
