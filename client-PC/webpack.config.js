@@ -1,15 +1,17 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
+const path = require('path');
+
 module.exports = {
     entry: {
-        app: ['webpack/hot/dev-server', './js/entry.js'],
+        app: ['webpack/hot/dev-server', './react_entry.js'],
     },
     output: {
-        path: '/Users/jackon/tutorial/electron/02-electron-react/public/built',
+        path: path.join(__dirname, 'public/built'),
         filename: 'bundle.js',
         publicPath: 'http://localhost:8080/built/'
     },
     devServer: {
-        contentBase: './public',
+        contentBase: path.join(__dirname, 'public'),
         publicPath: 'http://localhost:8080/built/'
     },
     module: {
