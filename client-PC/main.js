@@ -1,3 +1,5 @@
+import './src/common/reset.css?raw';
+
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
