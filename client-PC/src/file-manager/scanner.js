@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const wildcard = require('wildcard');
+const filesize = require('filesize');
 
 
 const ignorePaths = [
@@ -53,6 +54,8 @@ function scanPath(rootPath) {
   const metaInfo = {
     rawname: basename,
     ext,
+    sizeBytes: stat.size,
+    sizeReadable: filesize(stat.size),
   };
   console.log(metaInfo);
   return 1;
