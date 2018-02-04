@@ -1,0 +1,96 @@
+@import "../../common/variables.scss";
+
+$barHeight: 44px;
+$filesWidth: 20px;
+$filesHeight: 17px;
+$barLeft: 50px;
+// global
+
+.wrap {
+  box-sizing: border-box;
+  height: 112px;
+  padding: 34px 70px;
+  font-size: $fontSize;
+  color: $fontColor;
+  background: $secondBg;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35);
+}
+
+.close {
+  display: inline-block;
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: no-repeat center url("../../../assets/images/close.png");
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.inputWrap {
+  width: 550px;
+  height: 44px;
+  padding-left: $barLeft;
+  box-sizing: border-box;
+  border-radius: 137.63px;
+  background: $mainBg;
+  line-height: 28px;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: sans-serif;
+  text-align: left;
+
+  &:before {
+    content:"";
+    display:block;
+    position:absolute;
+    top: 50%;
+    left: 18px;
+    vertical-align: middle;
+  }
+ 
+}
+.path {
+  display: inline-block;
+  height: $barHeight;
+  line-height: $barHeight;
+}
+
+.file {
+  input {
+    position:absolute;
+    width:0;
+    overflow:hidden;
+    opacity:0;
+  }
+
+  &:before {
+    width: $filesWidth;
+    height: $filesHeight;
+    margin-top: -($filesHeight/2);
+    background: no-repeat center url("../../../assets/images/files.png");
+  }
+
+  &[title]:not([title=""]):before{
+    content:attr(title);
+    color:#162f44;
+  }
+
+  &:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    margin-top: -(20px/2);
+    line-height: 20px;
+    background: url("../../../assets/images/add@2x.png") no-repeat center;
+    background-size: cover;
+  }
+}
