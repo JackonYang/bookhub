@@ -19,11 +19,15 @@
   "dependencies": {
     "electron": "^1.7.12",
     "prop-types": "^15.6.0",
+    "filesize": "^3.6.0",
+    "md5-file": "^3.2.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.0"
+    "react-scripts": "1.1.0",
+    "redux": "^3.7.2",
+    "wildcard": "^1.1.2"
   },
   "devDependencies": {
     "babel": "^6.23.0",
