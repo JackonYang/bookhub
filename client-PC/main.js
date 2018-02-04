@@ -1,4 +1,4 @@
-import './src/common/reset.css?raw';
+// import './src/common/reset.css?raw';
 
 const electron = require('electron');
 const url = require('url');
@@ -47,10 +47,8 @@ function createAddWindows() {
   // const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   addWindow = new BrowserWindow({
-    // width: size.width,
-    // height: size.height,
-    width: 500,
-    height: 400,
+    width: 1600,
+    height: 900,
     title: 'Add Books',
   });
 
@@ -68,12 +66,12 @@ function createAddWindows() {
 
 // handle create settingsWindow
 function createPreferencesWindows() {
-  const electronScreen = electron.screen;
-  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  // const electronScreen = electron.screen;
+  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   preferencesWindow = new BrowserWindow({
-    width: size.width,
-    height: size.height,
+    width: 1600,
+    height: 900,
     title: 'Preferences',
   });
 
