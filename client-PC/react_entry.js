@@ -47,7 +47,7 @@ class Index extends React.Component {
         return (
             <Router>
                 <div>
-                    <Navbar />
+                    {/* <Navbar /> */}
 
                     {routes.map((route, index) => {
                         return <Route key={index} exact={route.exact} path={route.path} component={route.main}
