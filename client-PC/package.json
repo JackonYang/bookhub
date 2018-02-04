@@ -23,7 +23,8 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "wildcard": "^1.1.2"
   },
   "devDependencies": {
     "babel": "^6.23.0",
