@@ -19,6 +19,7 @@
   "dependencies": {
     "electron": "^1.7.12",
     "filesize": "^3.6.0",
+    "md5-file": "^3.2.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",

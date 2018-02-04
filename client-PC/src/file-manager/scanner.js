@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const wildcard = require('wildcard');
 const filesize = require('filesize');
+const md5File = require('md5-file');
 
 
 const ignorePaths = [
@@ -56,6 +57,7 @@ function scanPath(rootPath) {
     ext,
     sizeBytes: stat.size,
     sizeReadable: filesize(stat.size),
+    md5: md5File.sync(rootPath),
   };
   console.log(metaInfo);
   return 1;
