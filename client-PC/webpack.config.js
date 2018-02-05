@@ -5,6 +5,8 @@ module.exports = {
   entry: {
     app: ['webpack/hot/dev-server', './react_entry.jsx'],
   },
+  // https://jlongster.com/Backend-Apps-with-Webpack--Part-I
+  target: 'node',
   output: {
     path: path.join(__dirname, 'public/built'),
     filename: 'bundle.js',
