@@ -1,62 +1,62 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './table.scss';
 import radioIcon from '../../../assets/images/radio-icon.png';
 // import radioIconChecked from '../../../assets/images/right.png';
 
-const FakeData = [
-  {
-    selected: false,
-    title: 'title',
-    author: 'author',
-    year: 'year',
-    type: 'type',
-    size: 'size',
-    createTime: 'createTime',
-    tags: ['aaa', 'bb'],
-  },
-  {
-    selected: true,
-    title: 'title2',
-    author: 'author',
-    year: 'year',
-    type: 'type',
-    size: 'size',
-    createTime: 'createTime',
-    tags: ['aaa', 'bb'],
-  },
-  {
-    selected: false,
-    title: 'title3',
-    author: 'author',
-    year: 'year',
-    type: 'type',
-    size: 'size',
-    createTime: 'createTime',
-    tags: ['aaa', 'bb'],
-  },
-];
+// const FakeData = [
+//   {
+//     selected: false,
+//     title: 'title',
+//     author: 'author',
+//     year: 'year',
+//     type: 'type',
+//     size: 'size',
+//     createTime: 'createTime',
+//     tags: ['aaa', 'bb'],
+//   },
+//   {
+//     selected: true,
+//     title: 'title2',
+//     author: 'author',
+//     year: 'year',
+//     type: 'type',
+//     size: 'size',
+//     createTime: 'createTime',
+//     tags: ['aaa', 'bb'],
+//   },
+//   {
+//     selected: false,
+//     title: 'title3',
+//     author: 'author',
+//     year: 'year',
+//     type: 'type',
+//     size: 'size',
+//     createTime: 'createTime',
+//     tags: ['aaa', 'bb'],
+//   },
+// ];
 
 const thArrays = [
   {
     text: 'Title',
-    file: 'title',
+    file: 'rawname',
   },
   {
-    text: 'Author',
-    file: 'author',
+    text: 'MD5',
+    file: 'md5',
   },
-  {
-    text: 'Year',
-    file: 'year',
-  },
+  // {
+  //   text: 'Year',
+  //   file: 'year',
+  // },
   {
     text: 'Type',
-    file: 'type',
+    file: 'ext',
   },
   {
     text: 'Size',
-    file: 'size',
+    file: 'sizeReadable',
   },
   {
     text: 'Create Time',
@@ -70,19 +70,16 @@ const thArrays = [
 class Table extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: FakeData,
-      // checkList: [],
-    };
+    this.store = props.store;
   }
 
   render() {
-    console.log(this.state.data);
+    // console.log(this.state.data);
     const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
     console.log('ths', ths);
     ths.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} />);
 
-    const trows = FakeData.map(row => {
+    const trows = this.store.getState().scanLog.map(row => {
       const tds = thArrays.map(th => {
         console.log(th);
         return <div className={styles.cell} key={row[th.file]}>{row[th.file]}</div>;
@@ -141,4 +138,12 @@ class Table extends React.Component {
 // Table.defaultProps = {
 //   type: 'add',
 // };
+
+Table.propTypes = {
+  store: PropTypes.shape({
+    dispatch: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 export default Table;

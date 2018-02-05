@@ -29,7 +29,7 @@ class BookAdd extends React.Component {
       <div className={styles.wrap}>
         <TopFixed type="add" />
         <div className={styles.contentWrap}>
-          <Table />
+          <Table {...this.props} />
         </div>
       </div>
     );
