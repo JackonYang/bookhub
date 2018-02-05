@@ -21,17 +21,17 @@ const routes = [
     path: '/',
     exact: true,
     sidebar: () => <div>图书搜索</div>,
-    main: BookSearch,
+    main: props => <BookSearch {...props} />,
   },
   {
     path: '/add-books',
     sidebar: () => <div>添加书籍</div>,
-    main: BookAdd,
+    main: props => <BookAdd {...props} />,
   },
   {
     path: '/preferences',
     sidebar: () => <div>设置</div>,
-    main: Preferences,
+    main: props => <Preferences {...props} />,
   },
 ];
 
@@ -54,7 +54,7 @@ function Index() {
     <Router>
       <div className={styles.wrap}>
         {routes.map(route =>
-          <Route key={route.path} exact={route.exact} path={route.path} component={route.main} />)
+          <Route key={route.path} exact={route.exact} path={route.path} render={route.main} />)
         }
       </div>
     </Router>);
