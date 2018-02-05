@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route } from 'react-router-dom';
+import { createStore } from 'redux';
+
 // import { HashRouter as Router, Route, Link } from 'react-router-dom';
 
 import BookAdd from './containers/book-add/index';
@@ -9,6 +11,10 @@ import Preferences from './containers/preferences/index';
 /* eslint-disable import/extensions */
 import './common/reset.css?raw';
 import styles from './entry.scss';
+
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer);
 
 const routes = [
   {
@@ -55,7 +61,7 @@ function Index() {
 }
 
 ReactDOM.render(
-  <Index />,
+  <Index store={store} />,
   document.getElementById('app'),
 );
 
