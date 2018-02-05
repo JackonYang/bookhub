@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import styles from './index.scss';
 import SearchInput from '../search-input/index';
+
+// https://github.com/electron/electron/issues/9920
+const { ipcRenderer } = window.require('electron');
+
 
 class TopFixed extends React.Component {
   constructor(props) {
@@ -15,7 +20,9 @@ class TopFixed extends React.Component {
   }
 
   handleFileChange() {
-    this.setState({ fileKey: this.fileDom.files[0].path });
+    const fileKey = this.fileDom.files[0].path;
+    ipcRenderer.send('scan:path:change', fileKey);
+    this.setState({ fileKey });
   }
 
   handleSearchChange(key) {

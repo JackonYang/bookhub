@@ -5,7 +5,10 @@ const url = require('url');
 const path = require('path');
 
 const {
-  app, BrowserWindow, Menu,
+  app,
+  BrowserWindow,
+  Menu,
+  ipcMain,
 } = electron;
 
 let mainWindow;
@@ -86,6 +89,10 @@ function createPreferencesWindows() {
     preferencesWindow = null;
   });
 }
+
+ipcMain.on('scan:path:change', function (e, item) {
+  console.log('your input:', item);
+})
 
 mainMenuTemplate = [
   {
