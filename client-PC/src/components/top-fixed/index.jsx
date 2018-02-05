@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './index.scss';
+import styles from './top-fixed.scss';
 import SearchInput from '../search-input/index';
 
 // https://github.com/electron/electron/issues/9920

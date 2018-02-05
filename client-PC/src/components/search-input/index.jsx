@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './index.scss';
+import styles from './search-input.scss';
 
 /* eslint-disable react/prefer-stateless-function */
 class SearchIput extends React.Component {

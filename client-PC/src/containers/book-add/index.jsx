@@ -1,15 +1,17 @@
 import React from 'react';
 import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
+import styles from './book-add.scss';
 
 /* eslint-disable react/prefer-stateless-function */
 class BookAdd extends React.Component {
   render() {
     return (
-      <div>
+      <div className={styles.wrap}>
         <TopFixed type="add" />
-        <h2>Here! Adding New Books</h2>
-        <Table />
+        <div className={styles.contentWrap}>
+          <Table />
+        </div>
       </div>
     );
   }

@@ -1,5 +1,3 @@
-// import './src/common/reset.css?raw';
-
 import scanPath from './src/file-manager/scanner'
 
 const electron = require('electron');

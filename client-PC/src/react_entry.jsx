@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route } from 'react-router-dom';
 // import { HashRouter as Router, Route, Link } from 'react-router-dom';
 
-import BookAdd from './src/containers/book-add/index';
-import BookSearch from './src/containers/book-search/index';
-import Preferences from './src/containers/preferences/index';
+import BookAdd from './containers/book-add/index';
+import BookSearch from './containers/book-search/index';
+import Preferences from './containers/preferences/index';
+/* eslint-disable import/extensions */
+import './common/reset.css?raw';
+import styles from './entry.scss';
 
 const routes = [
   {
@@ -43,7 +46,7 @@ const routes = [
 function Index() {
   return (
     <Router>
-      <div>
+      <div className={styles.wrap}>
         {routes.map(route =>
           <Route key={route.path} exact={route.exact} path={route.path} component={route.main} />)
         }
@@ -53,6 +56,6 @@ function Index() {
 
 ReactDOM.render(
   <Index />,
-  document.getElementById('content'),
+  document.getElementById('app'),
 );
 
