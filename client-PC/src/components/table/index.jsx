@@ -83,7 +83,7 @@ class Table extends React.Component {
       });
 
       return (
-        <div key={row.file} className={styles.row}>
+        <div key={row.title} className={styles.row}>
           {tds}
         </div>
       );
