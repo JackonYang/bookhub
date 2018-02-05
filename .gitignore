@@ -1,5 +1,6 @@
 #project ignore
 local_settings.py
+main.js
 
 *.py[cod]
 

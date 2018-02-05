@@ -4,7 +4,7 @@
   "description": "book management and sharing",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "webpack --config webpack.electron.config.js && electron .",
     "start-all": "npm run-script watch && npm start",
     "watch": "./node_modules/.bin/webpack-dev-server",
     "build": "react-scripts build",
@@ -37,6 +37,8 @@
     "electron-packager": "^10.1.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-import-resolver-webpack": "^0.8.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "is-electron-renderer": "^2.0.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "node-sass": "^4.7.2",
@@ -44,6 +46,7 @@
     "style-loader": "^0.20.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "webpack-target-electron-renderer": "^0.4.0"
   }
 }
