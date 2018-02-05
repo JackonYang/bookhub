@@ -60,8 +60,13 @@ function Index() {
     </Router>);
 }
 
-ReactDOM.render(
-  <Index store={store} />,
-  document.getElementById('app'),
-);
+function render() {
+  ReactDOM.render(
+    <Index store={store} />,
+    document.getElementById('app'),
+  );
+}
 
+store.subscribe(render);
+
+render();
