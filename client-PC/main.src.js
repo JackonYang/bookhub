@@ -92,7 +92,7 @@ function createPreferencesWindows() {
 
 ipcMain.on('scan:path:change', function (e, path_name) {
   scanPath(path_name,  (msgKey, payload) => {
-    mainWindow.webContents.send(msgKey, payload);
+    addWindow.webContents.send(msgKey, payload);
   });
 })
 
