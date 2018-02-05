@@ -1,6 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import styles from './index.scss';
+import styles from './table.scss';
+import radioIcon from '../../../assets/images/radio-icon.png';
+// import radioIconChecked from '../../../assets/images/right.png';
 
 const FakeData = [
   {
@@ -70,17 +72,23 @@ class Table extends React.Component {
     super(props);
     this.state = {
       data: FakeData,
+      // checkList: [],
     };
   }
 
   render() {
     console.log(this.state.data);
     const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
+    console.log('ths', ths);
+    ths.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} />);
+
     const trows = FakeData.map(row => {
       const tds = thArrays.map(th => {
         console.log(th);
         return <div className={styles.cell} key={row[th.file]}>{row[th.file]}</div>;
       });
+
+      tds.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} ><img alt="radio" src={radioIcon} /> </div>);
 
       return (
         <div key={row.title} className={styles.row}>
