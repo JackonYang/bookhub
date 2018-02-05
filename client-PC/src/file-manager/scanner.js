@@ -24,7 +24,7 @@ function isIgnoreDir(filePath) {
   return ignorePaths.some(ptn => wildcard(ptn, filePath));
 }
 
-function scanPath(rootPath) {
+function scanPath(rootPath, dispatchMsg) {
   if (!fs.existsSync(rootPath)) {
     return 0;
   }
@@ -39,7 +39,7 @@ function scanPath(rootPath) {
 
     tarPath.forEach(ele => {
       // ignore hidden if configured
-      cntAdded += scanPath(path.join(rootPath, ele)); // recurse
+      cntAdded += scanPath(path.join(rootPath, ele), dispatchMsg); // recurse
     });
     return cntAdded;
   }
@@ -59,8 +59,10 @@ function scanPath(rootPath) {
     sizeReadable: filesize(stat.size),
     md5: md5File.sync(rootPath),
   };
-  console.log(metaInfo);
+  dispatchMsg('scan:book:found', metaInfo);
   return 1;
 }
 
-scanPath('/Users/');
+// scanPath('/Users/');
+
+export default scanPath;

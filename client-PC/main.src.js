@@ -1,5 +1,7 @@
 // import './src/common/reset.css?raw';
 
+import scanPath from './src/file-manager/scanner'
+
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
@@ -90,8 +92,10 @@ function createPreferencesWindows() {
   });
 }
 
-ipcMain.on('scan:path:change', function (e, item) {
-  console.log('your input:', item);
+ipcMain.on('scan:path:change', function (e, path_name) {
+  scanPath(path_name,  (msgKey, payload) => {
+    mainWindow.webContents.send(msgKey, payload);
+  });
 })
 
 mainMenuTemplate = [
