@@ -21,17 +21,17 @@ const routes = [
     path: '/',
     exact: true,
     sidebar: () => <div>图书搜索</div>,
-    main: props => <BookSearch {...props} />,
+    main: BookSearch,
   },
   {
     path: '/add-books',
     sidebar: () => <div>添加书籍</div>,
-    main: props => <BookAdd {...props} />,
+    main: BookAdd,
   },
   {
     path: '/preferences',
     sidebar: () => <div>设置</div>,
-    main: props => <Preferences {...props} />,
+    main: Preferences,
   },
 ];
 
@@ -49,13 +49,17 @@ const routes = [
 //   }
 // }
 
-function Index() {
+function Index(props) {
   return (
     <Router>
       <div className={styles.wrap}>
-        {routes.map(route =>
-          <Route key={route.path} exact={route.exact} path={route.path} render={route.main} />)
-        }
+        {routes.map(route => (
+          <Route
+            key={route.path}
+            exact={route.exact}
+            path={route.path}
+            render={() => <route.main store={props.store} />}
+          />))}
       </div>
     </Router>);
 }
