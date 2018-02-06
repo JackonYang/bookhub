@@ -16,6 +16,10 @@ $tdHeight: 48px;
   }
 }
 
+.rawname {
+  width: 300px;
+}
+
 .cell {
   display: table-cell;
   // padding: 6px 12px;
@@ -28,15 +32,24 @@ $tdHeight: 48px;
     display: block;
   }
 
-  &.operation {
+  &.selecte {
     // background: #9c9;
+    width: 40px;
     text-align: center;
-
     img {
       width: 18px;
       height: 18px;
       vertical-align: middle;
     }
+  }
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding-right: 15px;
   }
 }
 

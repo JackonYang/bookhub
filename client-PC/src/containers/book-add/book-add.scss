@@ -1,8 +1,11 @@
 @import "../../common/variables.scss";
 
+.wrap,
+.contentWrap {
+  background-color: $mainBg;
+}
 .wrap {
   height: 100%;
-  background-color: $mainBg;
 }
 .contentWrap {
   padding: 0 70px;

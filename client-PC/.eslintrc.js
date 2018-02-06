@@ -35,6 +35,9 @@ module.exports = {
     }],
     'arrow-parens': ['error', 'as-needed'],
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'jsx-a11y/role-has-required-aria-props': 1,
+    'jsx-a11y/interactive-supports-focus': 1,
+    'jsx-a11y/click-events-have-key-events': 1
   }
 }
