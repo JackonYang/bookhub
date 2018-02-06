@@ -42,14 +42,18 @@ const thArrays = [
     text: 'Title',
     file: 'rawname',
   },
-  {
-    text: 'MD5',
-    file: 'md5',
-  },
+  // {
+  //   text: 'MD5',
+  //   file: 'md5',
+  // },
   // {
   //   text: 'Year',
   //   file: 'year',
   // },
+  {
+    text: 'Path',
+    file: 'path',
+  },
   {
     text: 'Type',
     file: 'ext',
@@ -58,14 +62,14 @@ const thArrays = [
     text: 'Size',
     file: 'sizeReadable',
   },
-  {
-    text: 'Create Time',
-    file: 'createTime',
-  },
-  {
-    text: 'Tags',
-    file: 'tags',
-  },
+  // {
+  //   text: 'Create Time',
+  //   file: 'createTime',
+  // },
+  // {
+  //   text: 'Tags',
+  //   file: 'tags',
+  // },
 ];
 class Table extends React.Component {
   constructor(props) {
@@ -76,14 +80,18 @@ class Table extends React.Component {
   render() {
     // console.log(this.state.data);
     const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
-    console.log('ths', ths);
+    // console.log('ths', ths);
     ths.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} />);
 
     const trows = this.store.getState().scanLog.map(row => {
-      const tds = thArrays.map(th => {
-        console.log(th);
-        return <div className={styles.cell} key={row[th.file]}>{row[th.file]}</div>;
-      });
+      const tds = thArrays.map(th => (
+        <div
+          className={styles.cell}
+          key={row[th.md5]}
+        >
+          {row[th.file]}
+        </div>
+      ));
 
       tds.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} ><img alt="radio" src={radioIcon} /> </div>);
 
