@@ -12,6 +12,7 @@ const ignorePaths = [
   'log',
   'logs',
   'video-course',
+  'interview',
 ];
 
 const targetPtn = [
@@ -54,6 +55,7 @@ function scanPath(rootPath, dispatchMsg) {
 
   const metaInfo = {
     rawname: basename,
+    path: path.dirname(rootPath),
     ext,
     sizeBytes: stat.size,
     sizeReadable: filesize(stat.size),
