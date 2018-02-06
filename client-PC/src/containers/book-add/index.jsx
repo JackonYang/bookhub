@@ -16,6 +16,9 @@ class BookAdd extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.store;
+
+    this.handleSelectAll = this.handleSelectAll.bind(this);
+    this.handleDeselectAll = this.handleDeselectAll.bind(this);
   }
   componentDidMount() {
     ipcRenderer.on('scan:book:found', (e, metaInfo) => {
@@ -23,13 +26,25 @@ class BookAdd extends React.Component {
       this.store.dispatch(addBookMeta(metaInfo));
     });
   }
-
+  handleSelectAll() {
+    console.log('selectall', this);
+  }
+  handleDeselectAll() {
+    console.log('deselectall', this);
+  }
   render() {
     return (
       <div className={styles.wrap}>
         <TopFixed type="add" />
         <div className={styles.contentWrap}>
           <Table {...this.props} />
+        </div>
+        <div className={styles.operationGrop}>
+          <div className={styles.leftBtnGrop}>
+            <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>全选</span>
+            <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>全不选</span>
+          </div>
+          <button className={styles.addHub}>加入书库</button>
         </div>
       </div>
     );

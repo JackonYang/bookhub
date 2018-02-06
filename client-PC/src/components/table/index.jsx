@@ -78,6 +78,8 @@ class Table extends React.Component {
     this.state = {
       selectedList: [],
       secondsElapsed: 0,
+      // selectedAll: false,
+      // deselectAll: false,
     };
 
     this.handleSelect = this.handleSelect.bind(this);
