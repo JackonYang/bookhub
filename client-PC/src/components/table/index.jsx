@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './table.scss';
 import radioIcon from '../../../assets/images/radio-icon.png';
-// import radioIconChecked from '../../../assets/images/right.png';
+import radioIconChecked from '../../../assets/images/right.png';
 
 // const FakeData = [
 //   {
@@ -54,10 +54,10 @@ const thArrays = [
     text: 'Path',
     file: 'path',
   },
-  {
-    text: 'Type',
-    file: 'ext',
-  },
+  // {
+  //   text: 'Type',
+  //   file: 'ext',
+  // },
   {
     text: 'Size',
     file: 'sizeReadable',
@@ -75,28 +75,51 @@ class Table extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.store;
+    this.state = {
+      selectedList: [],
+    };
+
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+  handleSelect(idx) {
+    const tempList = [...this.state.selectedList];
+    tempList[idx] = typeof tempList[idx] === 'undefined' ? true : !tempList[idx];
+    this.setState({
+      selectedList: [...tempList],
+    });
+    console.log(this.state.selectedList);
   }
 
   render() {
     // console.log(this.state.data);
     const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
     // console.log('ths', ths);
-    ths.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} />);
+    ths.unshift(<div key="selecte" td-role="selecte" className={`${styles.cell} ${styles.selecte}`} />);
 
-    const trows = this.store.getState().scanLog.map(row => {
+    const trows = this.store.getState().scanLog.map((row, idx) => {
       const tds = thArrays.map(th => (
         <div
           className={styles.cell}
-          key={row[th.md5]}
+          key={row[th.file]}
         >
-          {row[th.file]}
+          <span className={styles[th.file]}>{row[th.file]}</span>
         </div>
       ));
-
-      tds.unshift(<div key="operation" td-role="operation" className={`${styles.cell} ${styles.operation}`} ><img alt="radio" src={radioIcon} /> </div>);
+      /* eslint-disable function-paren-newline  */
+      /* eslint-disable react/jsx-no-bind  */
+      tds.unshift(
+        <div
+          key="selecte"
+          td-role="selecte"
+          role="checkbox"
+          onClick={() => this.handleSelect(idx)}
+          className={`${styles.cell} ${styles.selecte}`}
+        >
+          <img alt="radio" src={this.state.selectedList[idx] ? radioIconChecked : radioIcon} />
+        </div>);
 
       return (
-        <div key={row.title} className={styles.row}>
+        <div key={row.rawname} className={styles.row}>
           {tds}
         </div>
       );
