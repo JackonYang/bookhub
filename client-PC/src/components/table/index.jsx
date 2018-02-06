@@ -77,9 +77,31 @@ class Table extends React.Component {
     this.store = props.store;
     this.state = {
       selectedList: [],
+      secondsElapsed: 0,
     };
 
     this.handleSelect = this.handleSelect.bind(this);
+  }
+  // componentWillMount() {
+  //   console.log('componentWillMount');
+  // }
+  componentDidMount() {
+    // console.log('componentDidMount');
+    this.interval = setInterval(this.tick.bind(this), 1000);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log('shouldComponentUpdate', nextProps, nextState, this.state.secondsElapsed);
+    return this.state.secondsElapsed !== nextState.secondsElapsed;
+  }
+  // componentWillUpdate() {
+  //   console.log('componentWillUpdate');
+  // }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  tick() {
+    // console.log(this.state);
+    this.setState({ secondsElapsed: this.state.secondsElapsed + 1 });
   }
   handleSelect(idx) {
     const tempList = [...this.state.selectedList];
@@ -87,9 +109,8 @@ class Table extends React.Component {
     this.setState({
       selectedList: [...tempList],
     });
-    console.log(this.state.selectedList);
+    // console.log(this.state.selectedList);
   }
-
   render() {
     // console.log(this.state.data);
     const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
