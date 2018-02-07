@@ -1,10 +1,18 @@
 # BookHub PC Client
 
+- [UI Design Preview](http://jackon.me/bookhub/)
+- [Release Plan](../doc/release-plan)
 
-## 快速开始开发
+## Development
+
+the client is built using Electron + React + Redux.
+
+I am new to them.
+here is how I learned them.
+[https://github.com/JackonYang/tutorial](https://github.com/JackonYang/tutorial)
 
 ```bash
-cnpm install
-npm run-script watch
-npm start
+npm install
+npm run-script watch  # run in terminal window 1
+npm start  # run in terminal window 2
 ```
