@@ -4,7 +4,7 @@ import styles from './table.scss';
 // import radioIcon from '../../../assets/images/radio-icon.png';
 // import radioIconChecked from '../../../assets/images/right.png';
 import Trow from './trow/index';
-import { toggleSelect } from '../../actions';
+import { toggleSelect, toggleStar } from '../../actions';
 
 // const FakeData = [
 //   {
@@ -73,6 +73,29 @@ const thArrays = [
   //   file: 'tags',
   // },
 ];
+
+const searchThArrays = [
+  {
+    text: 'Title',
+    file: 'rawname',
+  },
+  {
+    text: 'Author',
+    file: 'author',
+  },
+  {
+    text: 'Type',
+    file: 'ext',
+  },
+  {
+    text: 'Last Read',
+    file: 'lastRead',
+  },
+  // {
+  //   text: 'Tags',
+  //   file: 'tags',
+  // },
+];
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -85,6 +108,7 @@ class Table extends React.Component {
     };
 
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleStar = this.handleStar.bind(this);
   }
   // componentWillMount() {
   //   console.log('componentWillMount');
@@ -133,23 +157,56 @@ class Table extends React.Component {
     // });
     // console.log(this.state.selectedList);
   }
+  handleStar(idx) {
+    console.log('handleStar', idx);
+    this.store.dispatch(toggleStar(idx));
+    // const tempList = [...this.state.selectedList];
+    // tempList[idx] = !tempList[idx];
+    // // tempList[idx] = typeof tempList[idxx] === 'undefined' ? true : !tempList[idx];
+    // this.setState({
+    //   selectedList: [...tempList],
+    // });
+    // console.log(this.state.selectedList);
+  }
   render() {
-    const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
-    ths.unshift(<div key="selecte" td-role="selecte" className={`${styles.cell} ${styles.selecte}`} />);
-    // console.log('selectedList', this.state.selectedList);
-    const { selectedList } = this.store.getState();
-    const trows = this.store.getState().scanLog.map((row, idx) => {
-      console.log('idx', selectedList[idx]);
-      return (<Trow
-        key={row.md5}
-        row={row}
-        idx={idx}
-        thArrays={thArrays}
-        handleSelect={this.handleSelect}
-        isSelected={!!selectedList[idx]}
-      />);
-    });
-
+    let ths = [];
+    let trows = [];
+    console.log('render', this.props.type, this.store.getState().bookList);
+    if (this.props.type === 'search') {
+      // search 页面
+      ths = searchThArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
+      ths.unshift(<div key="star" td-role="star" className={`${styles.cell} ${styles.selecte}`} />);
+      const { starList } = this.store.getState();
+      trows = this.store.getState().bookList.map((row, idx) => {
+        console.log('idx', starList[idx]);
+        return (<Trow
+          key={row.md5}
+          type="search"
+          row={row}
+          idx={idx}
+          thArrays={searchThArrays}
+          handleSelect={this.handleStar}
+          isSelected={!!starList[idx]}
+        />);
+      });
+    } else {
+      // add 页面
+      ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
+      ths.unshift(<div key="selecte" td-role="selecte" className={`${styles.cell} ${styles.selecte}`} />);
+      // console.log('selectedList', this.state.selectedList);
+      const { selectedList } = this.store.getState();
+      trows = this.store.getState().scanLog.map((row, idx) => {
+        console.log('idx', selectedList[idx]);
+        return (<Trow
+          key={row.md5}
+          row={row}
+          idx={idx}
+          thArrays={thArrays}
+          handleSelect={this.handleSelect}
+          isSelected={!!selectedList[idx]}
+        />);
+      });
+    }
     return (
       <div className={styles.table} >
         <div className={`${styles.row} ${styles.header}`}>
@@ -194,6 +251,12 @@ Table.propTypes = {
     dispatch: PropTypes.func.isRequired,
     getState: PropTypes.func.isRequired,
   }).isRequired,
+  // table 类型
+  type: PropTypes.oneOf(['add', 'search']),
+};
+
+Table.defaultProps = {
+  type: 'add',
 };
 
 export default Table;

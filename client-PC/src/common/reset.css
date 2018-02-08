@@ -93,6 +93,10 @@ button {
   padding: 0;
   border: none;
 }
+
+button:focus {
+  outline: none;
+}
 /*私有*/
 #app {
   height: 100%;

@@ -3,12 +3,33 @@ import {
   SELECT_ALL,
   UNSELECT_ALL,
   TOGGLE_SELECT,
+  TOGGLE_STAR,
 } from '../actions';
 
 const initialState = {
-  bookList: [],
+  bookList: [
+    {
+      ext: 'pdf',
+      md5: '4fsaffdfad',
+      path: '/Users/vivian/Music/',
+      rawname: 'What are day',
+      sizeBytes: 1611161,
+      sizeReadable: '1.4 MB',
+      lastRead: '24 Jan 2018',
+    },
+    {
+      ext: 'pdf',
+      md5: 'ddsadasd',
+      path: '/Users/vivian/Music/',
+      rawname: 'What ddsd day',
+      sizeBytes: 1611162,
+      sizeReadable: '1.58 MB',
+      lastRead: '26 Oct 2017',
+    },
+  ],
   scanLog: [],
   selectedList: [],
+  starList: [],
 };
 
 export default (state = initialState, action) => {
@@ -50,6 +71,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedList: tempSelect,
+      };
+    }
+    case TOGGLE_STAR: {
+      const tempStar = [...state.starList];
+      tempStar[action.idx] = !tempStar[action.idx];
+
+      return {
+        ...state,
+        starList: tempStar,
       };
     }
     default:

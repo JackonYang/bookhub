@@ -34,6 +34,9 @@ class BookAdd extends React.Component {
     console.log('deselectall', this);
     this.store.dispatch(onUnSelectAll());
   }
+  addToStore() {
+    console.log('加入到书库', this);
+  }
   render() {
     return (
       <div className={styles.wrap}>
@@ -46,7 +49,7 @@ class BookAdd extends React.Component {
             <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>全选</span>
             <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>全不选</span>
           </div>
-          <button className={styles.addHub}>加入书库</button>
+          <button className={styles.addHub} onClick={this.addToStore}>加入书库</button>
         </div>
       </div>
     );
