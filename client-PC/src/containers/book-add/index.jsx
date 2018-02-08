@@ -5,7 +5,7 @@ import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-add.scss';
 
-import { addBookMeta } from '../../actions';
+import { addBookMeta, onUnSelectAll, onSelectAll } from '../../actions';
 
 
 // https://github.com/electron/electron/issues/9920
@@ -28,9 +28,11 @@ class BookAdd extends React.Component {
   }
   handleSelectAll() {
     console.log('selectall', this);
+    this.store.dispatch(onSelectAll());
   }
   handleDeselectAll() {
     console.log('deselectall', this);
+    this.store.dispatch(onUnSelectAll());
   }
   render() {
     return (

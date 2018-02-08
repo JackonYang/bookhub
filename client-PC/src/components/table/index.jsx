@@ -4,6 +4,7 @@ import styles from './table.scss';
 // import radioIcon from '../../../assets/images/radio-icon.png';
 // import radioIconChecked from '../../../assets/images/right.png';
 import Trow from './trow/index';
+import { toggleSelect } from '../../actions';
 
 // const FakeData = [
 //   {
@@ -77,7 +78,7 @@ class Table extends React.Component {
     super(props);
     this.store = props.store;
     this.state = {
-      selectedList: [],
+      // selectedList: [],
       // secondsElapsed: 0,
       // selectedAll: false,
       // deselectAll: false,
@@ -106,29 +107,46 @@ class Table extends React.Component {
   //   // console.log(this.state);
   //   this.setState({ secondsElapsed: this.state.secondsElapsed + 1 });
   // }
+
+  // componentWillMount() {
+  //   console.log('componentWillMount');
+  //   console.log('isSelectAll', this.store.getState().isSelectAll);
+  //   console.log('isUnSelectAll', this.store.getState().isUnSelectAll);
+  // }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('componentWillReceiveProps');
+  //   console.log(nextProps);
+  //   console.log('isSelectAll', this.store.getState().isSelectAll,
+  //   nextProps.store.getState().isSelectAll);
+  //   console.log('isUnSelectAll', this.store.getState().isUnSelectAll,
+  //   nextProps.store.getState().isUnSelectAll);
+  // }
+
   handleSelect(idx) {
-    // console.log('handleSelect', idx);
-    const tempList = [...this.state.selectedList];
-    tempList[idx] = !tempList[idx];
-    // tempList[idx] = typeof tempList[idxx] === 'undefined' ? true : !tempList[idx];
-    this.setState({
-      selectedList: [...tempList],
-    });
+    console.log('handleSelect', idx);
+    this.store.dispatch(toggleSelect(idx));
+    // const tempList = [...this.state.selectedList];
+    // tempList[idx] = !tempList[idx];
+    // // tempList[idx] = typeof tempList[idxx] === 'undefined' ? true : !tempList[idx];
+    // this.setState({
+    //   selectedList: [...tempList],
+    // });
     // console.log(this.state.selectedList);
   }
   render() {
     const ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
     ths.unshift(<div key="selecte" td-role="selecte" className={`${styles.cell} ${styles.selecte}`} />);
     // console.log('selectedList', this.state.selectedList);
+    const { selectedList } = this.store.getState();
     const trows = this.store.getState().scanLog.map((row, idx) => {
-      console.log('idx', this.state.selectedList[idx]);
+      console.log('idx', selectedList[idx]);
       return (<Trow
         key={row.md5}
         row={row}
         idx={idx}
         thArrays={thArrays}
         handleSelect={this.handleSelect}
-        isSelected={!!this.state.selectedList[idx]}
+        isSelected={!!selectedList[idx]}
       />);
     });
 
