@@ -93,39 +93,30 @@ class Table extends React.Component {
       </div>
     ));
 
-    if (this.props.type === 'search') {
-      // search 页面
-      ths.unshift(<div key="star" td-role="star" className={`${styles.cell} ${styles.selecte}`} />);
-      const { starList } = this.store.getState();
-      trows = this.store.getState().bookList.map((row, idx) => {
-        console.log('idx', starList[idx]);
-        return (<Trow
-          key={row.md5}
-          type="search"
-          row={row}
-          idx={idx}
-          thArrays={this.props.colTitles}
-          handleSelect={this.handleStar}
-          isSelected={!!starList[idx]}
-        />);
-      });
-    } else {
-      // add 页面
-      ths.unshift(<div key="selecte" td-role="selecte" className={`${styles.cell} ${styles.selecte}`} />);
-      // console.log('selectedList', this.state.selectedList);
-      const { selectedList } = this.store.getState();
-      trows = this.store.getState().scanLog.map((row, idx) => {
-        console.log('idx', selectedList[idx]);
-        return (<Trow
-          key={row.md5}
-          row={row}
-          idx={idx}
-          thArrays={this.props.colTitles}
-          handleSelect={this.handleSelect}
-          isSelected={!!selectedList[idx]}
-        />);
-      });
+    if (this.props.type === 'search') { // search 页面
+      ths.unshift((<div
+        key="star"
+        td-role="star"
+        className={`${styles.cell} ${styles.selecte}`}
+      />));
+    } else { // add 页面
+      ths.unshift(<div
+        key="selecte"
+        td-role="selecte"
+        className={`${styles.cell} ${styles.selecte}`}
+      />);
     }
+
+    trows = this.props.bookList.map((row, idx) => (<Trow
+      key={row.md5}
+      type={this.props.type}
+      row={row}
+      idx={idx}
+      thArrays={this.props.colTitles}
+      handleSelect={this.handleStar}
+      isSelected={!!row[this.props.col1]}
+    />));
+
     return (
       <div className={styles.table} >
         <div className={`${styles.row} ${styles.header}`}>
@@ -172,9 +163,14 @@ Table.propTypes = {
   }).isRequired,
   // table 类型
   type: PropTypes.oneOf(['add', 'search']),
+  col1: PropTypes.oneOf(['star', 'selecte']).isRequired,
   colTitles: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
     file: PropTypes.string.isRequired,
+  })).isRequired,
+  bookList: PropTypes.arrayOf(PropTypes.shape({
+    md5: PropTypes.string.isRequired,
+    ext: PropTypes.string.isRequired,
   })).isRequired,
 };
 

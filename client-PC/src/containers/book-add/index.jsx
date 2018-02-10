@@ -77,7 +77,12 @@ class BookAdd extends React.Component {
       <div className={styles.wrap}>
         <TopFixed type="add" />
         <div className={styles.contentWrap}>
-          <Table colTitles={colTitles} {...this.props} />
+          <Table
+            col1="selecte"
+            colTitles={colTitles}
+            bookList={this.store.getState().scanLog}
+            {...this.props}
+          />
         </div>
         <div className={styles.operationGrop}>
           <div className={styles.leftBtnGrop}>
