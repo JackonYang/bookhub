@@ -11,26 +11,24 @@ function Trow(props) {
   const {
     row,
     thArrays,
-    isSelected,
     idx,
     type,
   } = props;
   // 适配两种不同 type 的 row
   const darkSelect = type === 'search' ? star : radioIcon;
   const lightedSelect = type === 'search' ? starLighted : radioIconChecked;
-  // console.log('render', isSelected);
-  // console.log('render');
-  const tds = thArrays.map((th, i) => {
-    console.log('tds', th, row[th.file]);
-    return (
-      <div
-        className={styles.cell}
-        key={row[th.file] || th.file + i}
-      >
-        <span className={styles[th.file]}>{row[th.file]}</span>
-      </div>
-    );
-  });
+  const isSelected = type === 'search' ? row.isStared : row.isSelected;
+
+  const tds = thArrays.map((th, i) => (
+    <div
+      className={styles.cell}
+      key={row[th.file] || th.file + i}
+    >
+      <span className={styles[th.file]}>
+        {row[th.file]}
+      </span>
+    </div>
+  ));
 
   /* eslint-disable function-paren-newline  */
   /* eslint-disable react/jsx-no-bind  */
@@ -57,12 +55,7 @@ Trow.propTypes = {
   type: PropTypes.oneOf(['add', 'search']).isRequired,
   idx: PropTypes.number.isRequired,
   thArrays: PropTypes.arrayOf(PropTypes.object).isRequired,
-  isSelected: PropTypes.bool,
   // handleSelect: PropTypes.func.isRequired,
-};
-
-Trow.defaultProps = {
-  isSelected: true,
 };
 
 export default Trow;
