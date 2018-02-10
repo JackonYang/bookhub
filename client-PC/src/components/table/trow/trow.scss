@@ -1,26 +1,12 @@
-@import "../../common/variables.scss";
+@import "../../../common/variables.scss";
 
 $thFontSize: 12px;
 $thColor: #9E9E9E;
 $tdHeight: 48px;
 
-.table {
-  width: 100%;
-  display: table;
-  box-sizing: border-box;
-  color: $weightColor;
-  line-height: 20px;
-  @media screen and (max-width: 580px) {
-    display: block;
-  }
-}
-
-.rawname {
-  width: 300px;
-}
-
 .cell {
   display: table-cell;
+  // padding: 6px 12px;
   height: $tdHeight;
   line-height: $tdHeight;
   border-top: 8px solid $mainBg;
@@ -29,6 +15,20 @@ $tdHeight: 48px;
     // background: #9c9;
     width: 40px;
     text-align: center;
+    img {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+    }
+  }
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding-right: 15px;
   }
 }
 
@@ -42,14 +42,6 @@ $tdHeight: 48px;
     background: transparent;
     padding: 0;
     border-bottom: 1px solid #E0E0E0;
-
-    .cell {
-      height: auto;
-      padding: 17px 0 15px;
-      line-height: 15px;
-      border-bottom: 1px solid #E0E0E0;
-      border-top: none;
-    }
 
     &+.row {
       .cell {

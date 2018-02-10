@@ -5,7 +5,7 @@ import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-add.scss';
 
-import { addBookMeta } from '../../actions';
+import { addBookMeta, onUnSelectAll, onSelectAll } from '../../actions';
 
 
 // https://github.com/electron/electron/issues/9920
@@ -28,9 +28,14 @@ class BookAdd extends React.Component {
   }
   handleSelectAll() {
     console.log('selectall', this);
+    this.store.dispatch(onSelectAll());
   }
   handleDeselectAll() {
     console.log('deselectall', this);
+    this.store.dispatch(onUnSelectAll());
+  }
+  addToStore() {
+    console.log('加入到书库', this);
   }
   render() {
     return (
@@ -44,7 +49,7 @@ class BookAdd extends React.Component {
             <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>全选</span>
             <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>全不选</span>
           </div>
-          <button className={styles.addHub}>加入书库</button>
+          <button className={styles.addHub} onClick={this.addToStore}>加入书库</button>
         </div>
       </div>
     );
