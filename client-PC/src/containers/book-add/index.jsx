@@ -11,6 +11,41 @@ import { addBookMeta, onUnSelectAll, onSelectAll } from '../../actions';
 // https://github.com/electron/electron/issues/9920
 const { ipcRenderer } = window.require('electron');
 
+const colTitles = [
+  {
+    text: 'Title',
+    file: 'rawname',
+  },
+  // {
+  //   text: 'MD5',
+  //   file: 'md5',
+  // },
+  // {
+  //   text: 'Year',
+  //   file: 'year',
+  // },
+  {
+    text: 'Path',
+    file: 'path',
+  },
+  // {
+  //   text: 'Type',
+  //   file: 'ext',
+  // },
+  {
+    text: 'Size',
+    file: 'sizeReadable',
+  },
+  // {
+  //   text: 'Create Time',
+  //   file: 'createTime',
+  // },
+  // {
+  //   text: 'Tags',
+  //   file: 'tags',
+  // },
+];
+
 /* eslint-disable react/prefer-stateless-function */
 class BookAdd extends React.Component {
   constructor(props) {
@@ -42,7 +77,7 @@ class BookAdd extends React.Component {
       <div className={styles.wrap}>
         <TopFixed type="add" />
         <div className={styles.contentWrap}>
-          <Table {...this.props} />
+          <Table colTitles={colTitles} {...this.props} />
         </div>
         <div className={styles.operationGrop}>
           <div className={styles.leftBtnGrop}>

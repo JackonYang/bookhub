@@ -1,10 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 
 import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-search.scss';
 // import { addBookMeta } from '../../actions';
+
+const colTitles = [
+  {
+    text: 'Title',
+    file: 'rawname',
+  },
+  {
+    text: 'Author',
+    file: 'author',
+  },
+  {
+    text: 'Type',
+    file: 'ext',
+  },
+  {
+    text: 'Last Read',
+    file: 'lastRead',
+  },
+  // {
+  //   text: 'Tags',
+  //   file: 'tags',
+  // },
+];
 
 /* eslint-disable react/prefer-stateless-function */
 class BookSearch extends React.Component {
@@ -21,7 +45,7 @@ class BookSearch extends React.Component {
       <div className={styles.wrap}>
         <TopFixed type="search" />
         <div className={styles.contentWrap}>
-          <Table type="search" {...this.props} />
+          <Table type="search" colTitles={colTitles} {...this.props} />
         </div>
         <div className={styles.operationGrop}>
           <button className={styles.addHub} onClick={this.searchMore}>搜索更多</button>
@@ -38,5 +62,10 @@ BookSearch.propTypes = {
   }).isRequired,
 };
 
+// const mapStateToProps = state => {
+//   return { articles: state.articles };
+// };
+
+// const BookSearch = connect(mapStateToProps)(ConnectedBookSearch);
 
 export default BookSearch;
