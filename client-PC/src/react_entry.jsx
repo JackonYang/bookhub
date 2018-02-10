@@ -8,6 +8,7 @@ import { createStore } from 'redux';
 import BookAdd from './containers/book-add/index';
 import BookSearch from './containers/book-search/index';
 import Preferences from './containers/preferences/index';
+import RecentRead from './containers/recent-read/index';
 /* eslint-disable import/extensions */
 import './common/reset.css?raw';
 import styles from './entry.scss';
@@ -32,6 +33,11 @@ const routes = [
     path: '/preferences',
     sidebar: () => <div>设置</div>,
     main: Preferences,
+  },
+  {
+    path: '/recent-read',
+    sidebar: () => <div>设置</div>,
+    main: RecentRead,
   },
 ];
 

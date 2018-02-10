@@ -15,6 +15,7 @@ let mainWindow;
 
 let addWindow;
 let preferencesWindow;
+let recentWindow;
 let mainMenuTemplate;
 
 // Listen for app to be ready
@@ -90,6 +91,29 @@ function createPreferencesWindows() {
   });
 }
 
+// handle create recentWindow
+function createRecentWindowsWindows() {
+  // const electronScreen = electron.screen;
+  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+  recentWindow = new BrowserWindow({
+    width: 1600,
+    height: 900,
+    title: 'Recently Read',
+  });
+
+  recentWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'public/index.html'),
+    protocol: 'file:',
+    hash: '#/recent-read',
+    slashes: false,
+  }));
+  // Garbage collection handle
+  recentWindow.on('close', () => {
+    recentWindow = null;
+  });
+}
+
 ipcMain.on('scan:path:change', function (e, path_name) {
   scanPath(path_name,  (msgKey, payload) => {
     addWindow.webContents.send(msgKey, payload);
@@ -112,6 +136,13 @@ mainMenuTemplate = [
         accelerator: process.platform === 'darwin' ? 'Command+,' : 'Ctrl+,',
         click() {
           createPreferencesWindows();
+        },
+      },
+      {
+        label: 'Recently Read',
+        accelerator: process.platform === 'darwin' ? 'Command+,' : 'Ctrl+R',
+        click() {
+          createRecentWindowsWindows();
         },
       },
       {

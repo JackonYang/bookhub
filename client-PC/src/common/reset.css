@@ -97,6 +97,10 @@ button {
 button:focus {
   outline: none;
 }
+
+li {
+  list-style: none;
+}
 /*私有*/
 #app {
   height: 100%;
