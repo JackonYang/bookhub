@@ -16,6 +16,7 @@ const initialState = {
       sizeBytes: 1611161,
       sizeReadable: '1.4 MB',
       lastRead: '24 Jan 2018',
+      isStared: true,
     },
     {
       ext: 'pdf',
@@ -25,11 +26,10 @@ const initialState = {
       sizeBytes: 1611162,
       sizeReadable: '1.58 MB',
       lastRead: '26 Oct 2017',
+      isStared: false,
     },
   ],
   scanLog: [],
-  selectedList: [],
-  starList: [],
 };
 
 export default (state = initialState, action) => {

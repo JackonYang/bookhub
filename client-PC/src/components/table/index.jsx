@@ -6,96 +6,7 @@ import styles from './table.scss';
 import Trow from './trow/index';
 import { toggleSelect, toggleStar } from '../../actions';
 
-// const FakeData = [
-//   {
-//     selected: false,
-//     title: 'title',
-//     author: 'author',
-//     year: 'year',
-//     type: 'type',
-//     size: 'size',
-//     createTime: 'createTime',
-//     tags: ['aaa', 'bb'],
-//   },
-//   {
-//     selected: true,
-//     title: 'title2',
-//     author: 'author',
-//     year: 'year',
-//     type: 'type',
-//     size: 'size',
-//     createTime: 'createTime',
-//     tags: ['aaa', 'bb'],
-//   },
-//   {
-//     selected: false,
-//     title: 'title3',
-//     author: 'author',
-//     year: 'year',
-//     type: 'type',
-//     size: 'size',
-//     createTime: 'createTime',
-//     tags: ['aaa', 'bb'],
-//   },
-// ];
 
-const thArrays = [
-  {
-    text: 'Title',
-    file: 'rawname',
-  },
-  // {
-  //   text: 'MD5',
-  //   file: 'md5',
-  // },
-  // {
-  //   text: 'Year',
-  //   file: 'year',
-  // },
-  {
-    text: 'Path',
-    file: 'path',
-  },
-  // {
-  //   text: 'Type',
-  //   file: 'ext',
-  // },
-  {
-    text: 'Size',
-    file: 'sizeReadable',
-  },
-  // {
-  //   text: 'Create Time',
-  //   file: 'createTime',
-  // },
-  // {
-  //   text: 'Tags',
-  //   file: 'tags',
-  // },
-];
-
-const searchThArrays = [
-  {
-    text: 'Title',
-    file: 'rawname',
-  },
-  {
-    text: 'Author',
-    file: 'author',
-  },
-  {
-    text: 'Type',
-    file: 'ext',
-  },
-  {
-    text: 'Last Read',
-    file: 'lastRead',
-  },
-  // {
-  //   text: 'Tags',
-  //   file: 'tags',
-  // },
-];
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -171,42 +82,41 @@ class Table extends React.Component {
   render() {
     let ths = [];
     let trows = [];
-    console.log('render', this.props.type, this.store.getState().bookList);
-    if (this.props.type === 'search') {
-      // search 页面
-      ths = searchThArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
-      ths.unshift(<div key="star" td-role="star" className={`${styles.cell} ${styles.selecte}`} />);
-      const { starList } = this.store.getState();
-      trows = this.store.getState().bookList.map((row, idx) => {
-        console.log('idx', starList[idx]);
-        return (<Trow
-          key={row.md5}
-          type="search"
-          row={row}
-          idx={idx}
-          thArrays={searchThArrays}
-          handleSelect={this.handleStar}
-          isSelected={!!starList[idx]}
-        />);
-      });
-    } else {
-      // add 页面
-      ths = thArrays.map(th => <div className={styles.cell} key={th.file}>{th.text}</div>);
-      ths.unshift(<div key="selecte" td-role="selecte" className={`${styles.cell} ${styles.selecte}`} />);
-      // console.log('selectedList', this.state.selectedList);
-      const { selectedList } = this.store.getState();
-      trows = this.store.getState().scanLog.map((row, idx) => {
-        console.log('idx', selectedList[idx]);
-        return (<Trow
-          key={row.md5}
-          row={row}
-          idx={idx}
-          thArrays={thArrays}
-          handleSelect={this.handleSelect}
-          isSelected={!!selectedList[idx]}
-        />);
-      });
+    // console.log('render', this.props.type, this.store.getState().bookList);
+
+    ths = this.props.colTitles.map(th => (
+      <div
+        key={th.file}
+        className={styles.cell}
+      >
+        {th.text}
+      </div>
+    ));
+
+    if (this.props.type === 'search') { // search 页面
+      ths.unshift((<div
+        key="star"
+        td-role="star"
+        className={`${styles.cell} ${styles.selecte}`}
+      />));
+    } else { // add 页面
+      ths.unshift(<div
+        key="selecte"
+        td-role="selecte"
+        className={`${styles.cell} ${styles.selecte}`}
+      />);
     }
+
+    trows = this.props.bookList.map((row, idx) => (<Trow
+      key={row.md5}
+      type={this.props.type}
+      row={row}
+      idx={idx}
+      thArrays={this.props.colTitles}
+      handleSelect={this.handleStar}
+      isSelected={!!row[this.props.col1]}
+    />));
+
     return (
       <div className={styles.table} >
         <div className={`${styles.row} ${styles.header}`}>
@@ -253,6 +163,15 @@ Table.propTypes = {
   }).isRequired,
   // table 类型
   type: PropTypes.oneOf(['add', 'search']),
+  col1: PropTypes.oneOf(['star', 'selecte']).isRequired,
+  colTitles: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    file: PropTypes.string.isRequired,
+  })).isRequired,
+  bookList: PropTypes.arrayOf(PropTypes.shape({
+    md5: PropTypes.string.isRequired,
+    ext: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 Table.defaultProps = {

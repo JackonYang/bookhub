@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 // import { HashRouter as Router, Route, Link } from 'react-router-dom';
 
@@ -66,7 +67,9 @@ function Index(props) {
 
 function render() {
   ReactDOM.render(
-    <Index store={store} />,
+    <Provider store={store}>
+      <Index store={store} />
+    </Provider>,
     document.getElementById('app'),
   );
 }
