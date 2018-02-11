@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
@@ -7,6 +8,15 @@ import styles from './book-add.scss';
 
 import { addBookMeta, onUnSelectAll, onSelectAll } from '../../actions';
 
+const mapStateToProps = (state, ownProps) => ({
+  bookList: state.scanLog,
+  ...ownProps,
+});
+
+const mapDispatchToProps = dispatch => ({
+  selectAll: () => dispatch(onSelectAll()),
+  selectNone: () => dispatch(onUnSelectAll()),
+});
 
 // https://github.com/electron/electron/issues/9920
 const { ipcRenderer } = window.require('electron');
@@ -47,7 +57,7 @@ const colTitles = [
 ];
 
 /* eslint-disable react/prefer-stateless-function */
-class BookAdd extends React.Component {
+class ConnectedBookAdd extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.store;
@@ -70,7 +80,7 @@ class BookAdd extends React.Component {
     this.store.dispatch(onUnSelectAll());
   }
   addToStore() {
-    console.log('加入到书库', this);
+    console.log('Add To Library', this);
   }
   render() {
     return (
@@ -80,26 +90,32 @@ class BookAdd extends React.Component {
           <Table
             type="add"
             colTitles={colTitles}
-            bookList={this.store.getState().scanLog}
+            bookList={this.props.bookList}
           />
         </div>
         <div className={styles.operationGrop}>
           <div className={styles.leftBtnGrop}>
-            <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>全选</span>
-            <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>全不选</span>
+            <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>All</span>
+            <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>None</span>
           </div>
-          <button className={styles.addHub} onClick={this.addToStore}>加入书库</button>
+          <button className={styles.addHub} onClick={this.addToStore}>Add To Library</button>
         </div>
       </div>
     );
   }
 }
 
-BookAdd.propTypes = {
+ConnectedBookAdd.propTypes = {
   store: PropTypes.shape({
     dispatch: PropTypes.func.isRequired,
     getState: PropTypes.func.isRequired,
   }).isRequired,
+  bookList: PropTypes.arrayOf(PropTypes.shape({
+    md5: PropTypes.string.isRequired,
+    ext: PropTypes.string.isRequired,
+  })).isRequired,
 };
+
+const BookAdd = connect(mapStateToProps, mapDispatchToProps)(ConnectedBookAdd);
 
 export default BookAdd;
