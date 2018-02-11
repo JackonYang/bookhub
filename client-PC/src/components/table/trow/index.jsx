@@ -37,7 +37,7 @@ function Trow(props) {
       key={`select-${idx}`}
       td-role="select"
       role="checkbox"
-      onClick={() => this.props.handleSelect(idx)}
+      onClick={() => props.handleSelect(idx)}
       className={`${styles.cell} ${styles.selecte}`}
     >
       <img alt="radio" src={isSelected ? lightedSelect : darkSelect} />
@@ -49,13 +49,14 @@ function Trow(props) {
     </div>
   );
 }
+
 /* eslint-disable react/forbid-prop-types */
 Trow.propTypes = {
   row: PropTypes.object.isRequired,
   type: PropTypes.oneOf(['add', 'search']).isRequired,
   idx: PropTypes.number.isRequired,
   thArrays: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // handleSelect: PropTypes.func.isRequired,
+  handleSelect: PropTypes.func.isRequired,
 };
 
 export default Trow;
