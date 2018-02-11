@@ -62,12 +62,12 @@ app.on('ready', () => {
   ));
 });
 
+// ipcMain.on('bg:started', (e, msg) => {
+//   console.log(msg);
+// });
+
 ipcMain.on('scan:path:change', (e, pathName) => {
   backgroundWindow.webContents.send('book:scan', pathName);
-});
-
-ipcMain.on('bg:started', (e, msg) => {
-  console.log(msg);
 });
 
 ipcMain.on('scan:book:found', (e, msg) => {
