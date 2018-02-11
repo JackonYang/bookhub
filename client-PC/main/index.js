@@ -32,53 +32,25 @@ app.on('ready', () => {
   backgroundWindow = createBackgroundWindow();
 
   // build menu from template
-  Menu.setApplicationMenu(createMainMenu(createAddWindows, createPreferencesWindows));
+  Menu.setApplicationMenu(createMainMenu(switchToAddBooks, switchToPreferences));
 });
 
-// handle create addWindow
-function createAddWindows() {
-  // const electronScreen = electron.screen;
-  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
-
-  addWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    title: 'Add Books',
-  });
-
-  addWindow.loadURL(url.format({
+function switchToAddBooks() {
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'public/index.html'),
     protocol: 'file:',
     hash: '#/add-books',
     slashes: false,
   }));
-  // Garbage collection handle
-  addWindow.on('close', () => {
-    addWindow = null;
-  });
 }
 
-// handle create settingsWindow
-function createPreferencesWindows() {
-  // const electronScreen = electron.screen;
-  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
-
-  preferencesWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    title: 'Preferences',
-  });
-
-  preferencesWindow.loadURL(url.format({
+function switchToPreferences() {
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'public/index.html'),
     protocol: 'file:',
     hash: '#/preferences',
     slashes: false,
   }));
-  // Garbage collection handle
-  preferencesWindow.on('close', () => {
-    preferencesWindow = null;
-  });
 }
 
 ipcMain.on('scan:path:change', function (e, path_name) {
@@ -90,5 +62,5 @@ ipcMain.on('bg:started', function (e, msg) {
 })
 
 ipcMain.on('scan:book:found', function (e, msg) {
-  addWindow.webContents.send('scan:book:found', msg);
+  mainWindow.webContents.send('scan:book:found', msg);
 })
