@@ -2,6 +2,8 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
+import createMainWindow from './main_window'
+
 const {
   app,
   BrowserWindow,
@@ -18,21 +20,8 @@ let mainMenuTemplate;
 
 // Listen for app to be ready
 app.on('ready', () => {
-  const electronScreen = electron.screen;
-  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  mainWindow = createMainWindow();
 
-  // Create main window
-  mainWindow = new BrowserWindow({
-    width: size.width,
-    height: size.height,
-  });
-
-  // Load html into window
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'public/index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
   // Quit app when closed
   mainWindow.on('closed', () => {
     app.quit();
@@ -43,12 +32,12 @@ app.on('ready', () => {
     nodeIntegrationInWorker: true,
   });
 
-    // Load html into window
-    backgroundWindow.loadURL(url.format({
-      pathname: path.join(__dirname, 'public/background/index.html'),
-      protocol: 'file:',
-      slashes: true,
-    }));
+  // Load html into window
+  backgroundWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'public/background/index.html'),
+    protocol: 'file:',
+    slashes: true,
+  }));
 
   // build menu from template
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
