@@ -1,5 +1,3 @@
-import scanPath from '../renderer/file-manager/scanner'
-
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
@@ -104,13 +102,15 @@ function createPreferencesWindows() {
 }
 
 ipcMain.on('scan:path:change', function (e, path_name) {
-  scanPath(path_name,  (msgKey, payload) => {
-    addWindow.webContents.send(msgKey, payload);
-  });
+  backgroundWindow.webContents.send('book:scan', path_name);
 })
 
 ipcMain.on('bg:started', function (e, msg) {
   console.log(msg);
+})
+
+ipcMain.on('scan:book:found', function (e, msg) {
+  addWindow.webContents.send('scan:book:found', msg);
 })
 
 mainMenuTemplate = [
