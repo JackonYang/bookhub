@@ -1,21 +1,28 @@
+import {
+  app,
+  Menu,
+  ipcMain,
+} from 'electron';
+import url from 'url';
+import path from 'path';
+
 import createMainWindow from './main_window';
 import createMainMenu from './main_menu';
 
 import createBackgroundWindow from '../background/background_window';
 
-const electron = require('electron');
-const url = require('url');
-const path = require('path');
-
-
-const {
-  app,
-  Menu,
-  ipcMain,
-} = electron;
 
 let mainWindow;
 let backgroundWindow;
+
+function switchToSearchBooks() {
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'public/index.html'),
+    protocol: 'file:',
+    hash: '#/',
+    slashes: false,
+  }));
+}
 
 function switchToAddBooks() {
   mainWindow.loadURL(url.format({
@@ -38,6 +45,7 @@ function switchToPreferences() {
 // Listen for app to be ready
 app.on('ready', () => {
   mainWindow = createMainWindow();
+  switchToSearchBooks();
 
   // Quit app when closed
   mainWindow.on('closed', () => {
@@ -47,7 +55,11 @@ app.on('ready', () => {
   backgroundWindow = createBackgroundWindow();
 
   // build menu from template
-  Menu.setApplicationMenu(createMainMenu(switchToAddBooks, switchToPreferences));
+  Menu.setApplicationMenu(createMainMenu(
+    switchToAddBooks,
+    switchToPreferences,
+    switchToSearchBooks,
+  ));
 });
 
 ipcMain.on('scan:path:change', (e, pathName) => {

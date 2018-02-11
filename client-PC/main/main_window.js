@@ -1,6 +1,4 @@
 const electron = require('electron');
-const url = require('url');
-const path = require('path');
 
 const {
   BrowserWindow,
@@ -14,14 +12,6 @@ function createMainWindow() {
     width: size.width,
     height: size.height,
   });
-
-  // Load html into window
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'public/index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
-
   return mainWindow;
 }
 

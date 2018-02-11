@@ -1,8 +1,6 @@
+import { ipcRenderer } from 'electron';
+
 import scanPath from '../renderer/file-manager/scanner';
-
-const electron = require('electron');
-
-const { ipcRenderer } = electron;
 
 ipcRenderer.send('bg:started', 'background started!');
 

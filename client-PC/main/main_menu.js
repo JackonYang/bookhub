@@ -5,7 +5,11 @@ const {
   app,
 } = electron;
 
-function createMainMenu(switchToAddBooks, switchToPreferences) {
+function createMainMenu(
+  switchToAddBooks,
+  switchToPreferences,
+  switchToSearchBooks,
+) {
   const mainMenuTemplate = [
     {
       label: 'File',
@@ -15,6 +19,13 @@ function createMainMenu(switchToAddBooks, switchToPreferences) {
           accelerator: process.platform === 'darwin' ? 'Command+N' : 'Ctrl+N',
           click() {
             switchToAddBooks();
+          },
+        },
+        {
+          label: 'Search Books',
+          accelerator: process.platform === 'darwin' ? 'Command+F' : 'Ctrl+F',
+          click() {
+            switchToSearchBooks();
           },
         },
         {
