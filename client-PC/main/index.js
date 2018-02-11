@@ -1,5 +1,3 @@
-import scanPath from './src/file-manager/scanner'
-
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
@@ -12,6 +10,7 @@ const {
 } = electron;
 
 let mainWindow;
+let backgroundWindow;
 
 let addWindow;
 let preferencesWindow;
@@ -38,6 +37,18 @@ app.on('ready', () => {
   mainWindow.on('closed', () => {
     app.quit();
   });
+
+  backgroundWindow = new BrowserWindow({
+    show: false,
+    nodeIntegrationInWorker: true,
+  });
+
+    // Load html into window
+    backgroundWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'public/background/index.html'),
+      protocol: 'file:',
+      slashes: true,
+    }));
 
   // build menu from template
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
@@ -91,9 +102,15 @@ function createPreferencesWindows() {
 }
 
 ipcMain.on('scan:path:change', function (e, path_name) {
-  scanPath(path_name,  (msgKey, payload) => {
-    addWindow.webContents.send(msgKey, payload);
-  });
+  backgroundWindow.webContents.send('book:scan', path_name);
+})
+
+ipcMain.on('bg:started', function (e, msg) {
+  console.log(msg);
+})
+
+ipcMain.on('scan:book:found', function (e, msg) {
+  addWindow.webContents.send('scan:book:found', msg);
 })
 
 mainMenuTemplate = [

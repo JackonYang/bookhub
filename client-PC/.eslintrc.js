@@ -18,12 +18,12 @@ module.exports = {
   'settings': {
     'import/resolver': {
       'webpack': {
-        'config': path.join(__dirname, 'webpack.config.js'),
+        'config': path.join(__dirname, 'webpack.config.react.js'),
       },
     },
     'import/alias': {
-      '@p': path.join(__dirname, 'src', 'components'),
-      '@n': path.join(__dirname, 'src', 'containers'),
+      '@p': path.join(__dirname, 'renderer/', 'components'),
+      '@n': path.join(__dirname, 'renderer/', 'containers'),
     }
   },
   // add your custom rules here

@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    app: ['webpack/hot/dev-server', './src/react_entry.jsx'],
+    app: ['webpack/hot/dev-server', './renderer//react_entry.jsx'],
   },
   // https://jlongster.com/Backend-Apps-with-Webpack--Part-I
   target: 'node',
@@ -19,9 +19,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@': path.join(__dirname, 'src'),
-      '@p': path.join(__dirname, 'src', 'components'),
-      '@n': path.join(__dirname, 'src', 'containers'),
+      '@': path.join(__dirname, 'renderer/'),
+      '@p': path.join(__dirname, 'renderer/', 'components'),
+      '@n': path.join(__dirname, 'renderer/', 'containers'),
     }
   },
   module: {
