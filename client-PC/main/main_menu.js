@@ -2,10 +2,10 @@ const electron = require('electron');
 
 const {
   Menu,
+  app,
 } = electron;
 
 function createMainMenu(switchToAddBooks, switchToPreferences) {
-
   const mainMenuTemplate = [
     {
       label: 'File',

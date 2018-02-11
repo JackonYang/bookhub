@@ -18,6 +18,20 @@ module.exports = {
     __filename: false
   },
   module: {
-    rules: []
+    loaders: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /(node_modules)/,
+        options: {
+          extends: path.join(__dirname, '/.eslintrc.js'),
+          configFile: '.eslintrc.js',
+          // failOnWarning: true,
+          // failOnError: true,
+          cache: false,
+        },
+      },
+    ]
   },
 };

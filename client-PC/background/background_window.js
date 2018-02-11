@@ -7,7 +7,7 @@ const {
 } = electron;
 
 function createBackgroundWindow() {
-  let backgroundWindow = new BrowserWindow({
+  const backgroundWindow = new BrowserWindow({
     show: false,
     nodeIntegrationInWorker: true,
   });
