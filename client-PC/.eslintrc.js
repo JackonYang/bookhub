@@ -18,7 +18,7 @@ module.exports = {
   'settings': {
     'import/resolver': {
       'webpack': {
-        'config': path.join(__dirname, 'webpack.config.js'),
+        'config': path.join(__dirname, 'webpack.config.react.js'),
       },
     },
     'import/alias': {
