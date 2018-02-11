@@ -70,6 +70,14 @@ ipcMain.on('scan:task:new', (e, targetPath) => {
   backgroundWindow.webContents.send('bg:scan:task:new', targetPath);
 });
 
+ipcMain.on('scan:heartbeat', (e, msg) => {
+  // console.log(msg);
+});
+
+ipcMain.on('scan:error', (e, msg) => {
+  // console.log(msg);
+});
+
 ipcMain.on('scan:book:found', (e, msg) => {
   mainWindow.webContents.send('scan:book:found', msg);
 });

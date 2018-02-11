@@ -27,25 +27,25 @@ function isIgnoreDir(filePath) {
 
 function scanPath(targetPath, dispatchMsg) {
   if (!fs.existsSync(targetPath)) {
+    dispatchMsg('scan:error', `path not exists. path=${targetPath}`);
     return 0;
   }
 
   const stat = fs.lstatSync(targetPath);
 
   if (stat.isDirectory()) {
+    dispatchMsg('scan:heartbeat', `scanning ${targetPath}`);
+
     let cntAdded = 0;
-    const tarPath = fs.readdirSync(targetPath).filter(ele => !isIgnoreDir(ele));
-
-    // count scaned files and log
-
-    tarPath.forEach(ele => {
-      // ignore hidden if configured
+    const subPaths = fs.readdirSync(targetPath).filter(ele => !isIgnoreDir(ele));
+    subPaths.forEach(ele => {
       cntAdded += scanPath(path.join(targetPath, ele), dispatchMsg); // recurse
     });
     return cntAdded;
   }
 
   // else -> file
+  // match target rule
   const ext = path.extname(targetPath);
   if (!targetPtn.includes(ext)) {
     return 0;
