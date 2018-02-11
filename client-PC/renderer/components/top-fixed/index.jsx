@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './top-fixed.scss';
 import SearchInput from '../search-input/index';
+import FileInput from '../file-input/index';
 
 // https://github.com/electron/electron/issues/9920
 const { ipcRenderer } = window.require('electron');
@@ -12,17 +13,18 @@ class TopFixed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileKey: 'user/图书文件夹',
+      // fileKey: 'user/图书文件夹',
       searchKey: '',
     };
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
-  handleFileChange() {
-    const fileKey = this.fileDom.files[0].path;
-    ipcRenderer.send('scan:path:change', fileKey);
-    this.setState({ fileKey });
+  handleFileChange(path) {
+    // const fileKey = this.fileDom.files[0].path;
+    ipcRenderer.send('scan:path:change', path);
+    console.log(this);
+    // this.setState({ fileKey: path });
   }
 
   handleSearchChange(key) {
@@ -38,20 +40,7 @@ class TopFixed extends React.Component {
   render() {
     // 上传文件
     const fileInput = () => (
-      <label className={`${styles.inputWrap} ${styles.file}`} htmlFor="file-input">
-        <span className={styles.path}>{this.state.fileKey}</span>
-        <input
-          id="file-input"
-          type="file"
-          ref={input => {
-            this.fileDom = input;
-          }}
-          onChange={this.handleFileChange}
-          webkitdirectory="true"
-          directory="true"
-          multiple
-        />
-      </label>
+      <FileInput id="file-input" onFileChangeCb={this.handleFileChange} />
     );
 
     return (
