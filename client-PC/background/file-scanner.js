@@ -25,41 +25,41 @@ function isIgnoreDir(filePath) {
   return ignorePaths.some(ptn => wildcard(ptn, filePath));
 }
 
-function scanPath(rootPath, dispatchMsg) {
-  if (!fs.existsSync(rootPath)) {
+function scanPath(targetPath, dispatchMsg) {
+  if (!fs.existsSync(targetPath)) {
     return 0;
   }
 
-  const stat = fs.lstatSync(rootPath);
+  const stat = fs.lstatSync(targetPath);
 
   if (stat.isDirectory()) {
     let cntAdded = 0;
-    const tarPath = fs.readdirSync(rootPath).filter(ele => !isIgnoreDir(ele));
+    const tarPath = fs.readdirSync(targetPath).filter(ele => !isIgnoreDir(ele));
 
     // count scaned files and log
 
     tarPath.forEach(ele => {
       // ignore hidden if configured
-      cntAdded += scanPath(path.join(rootPath, ele), dispatchMsg); // recurse
+      cntAdded += scanPath(path.join(targetPath, ele), dispatchMsg); // recurse
     });
     return cntAdded;
   }
 
   // else -> file
-  const ext = path.extname(rootPath);
+  const ext = path.extname(targetPath);
   if (!targetPtn.includes(ext)) {
     return 0;
   }
 
-  const basename = path.basename(rootPath, ext);
+  const basename = path.basename(targetPath, ext);
 
   const metaInfo = {
     rawname: basename,
-    path: path.dirname(rootPath),
+    path: path.dirname(targetPath),
     ext,
     sizeBytes: stat.size,
     sizeReadable: filesize(stat.size),
-    md5: md5File.sync(rootPath),
+    md5: md5File.sync(targetPath),
   };
   dispatchMsg('scan:book:found', metaInfo);
   return 1;
