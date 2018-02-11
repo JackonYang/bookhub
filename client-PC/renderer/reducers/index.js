@@ -1,7 +1,7 @@
 import {
   BOOK_SCANNED,
   SELECT_ALL,
-  UNSELECT_ALL,
+  SELECT_NONE,
   TOGGLE_SELECT,
   TOGGLE_STAR,
 } from '../actions';
@@ -52,26 +52,18 @@ export default (state = initialState, action) => {
       };
     }
     case SELECT_ALL: {
-      const tempSelect = [];
-      for (let i = 0; i < state.scanLog.length;) {
-        if (!tempSelect[i]) tempSelect[i] = true;
-        i += 1;
-      }
-      return {
-        ...state,
-        selectedList: tempSelect,
-      };
+      return Object.assign({}, state, {
+        scanLog: state.scanLog.map(bookMeta => Object.assign({}, bookMeta, {
+          isSelected: true,
+        })),
+      });
     }
-    case UNSELECT_ALL: {
-      const tempSelect = [];
-      for (let i = 0; i < state.scanLog.length;) {
-        if (tempSelect[i]) tempSelect[i] = false;
-        i += 1;
-      }
-      return {
-        ...state,
-        selectedList: tempSelect,
-      };
+    case SELECT_NONE: {
+      return Object.assign({}, state, {
+        scanLog: state.scanLog.map(bookMeta => Object.assign({}, bookMeta, {
+          isSelected: false,
+        })),
+      });
     }
     case TOGGLE_STAR: {
       return Object.assign({}, state, {

@@ -6,7 +6,7 @@ import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-add.scss';
 
-import { addBookMeta, onUnSelectAll, onSelectAll } from '../../actions';
+import { addBookMeta, selectAll, selectNone } from '../../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   bookList: state.scanLog,
@@ -14,8 +14,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  selectAll: () => dispatch(onSelectAll()),
-  selectNone: () => dispatch(onUnSelectAll()),
+  selectAll: () => dispatch(selectAll()),
+  selectNone: () => dispatch(selectNone()),
 });
 
 // https://github.com/electron/electron/issues/9920
@@ -61,23 +61,12 @@ class ConnectedBookAdd extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.store;
-
-    this.handleSelectAll = this.handleSelectAll.bind(this);
-    this.handleDeselectAll = this.handleDeselectAll.bind(this);
   }
   componentDidMount() {
     ipcRenderer.on('scan:book:found', (e, metaInfo) => {
       // console.log(this.store.getState().scanLog.length);
       this.store.dispatch(addBookMeta(metaInfo));
     });
-  }
-  handleSelectAll() {
-    console.log('selectall', this);
-    this.store.dispatch(onSelectAll());
-  }
-  handleDeselectAll() {
-    console.log('deselectall', this);
-    this.store.dispatch(onUnSelectAll());
   }
   addToStore() {
     console.log('Add To Library', this);
@@ -95,8 +84,8 @@ class ConnectedBookAdd extends React.Component {
         </div>
         <div className={styles.operationGrop}>
           <div className={styles.leftBtnGrop}>
-            <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>All</span>
-            <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>None</span>
+            <span role="button" className={styles.selectBtn} onClick={this.props.selectAll}>All</span>
+            <span role="button" className={styles.selectBtn} onClick={this.props.selectNone}>None</span>
           </div>
           <button className={styles.addHub} onClick={this.addToStore}>Add To Library</button>
         </div>
@@ -114,6 +103,8 @@ ConnectedBookAdd.propTypes = {
     md5: PropTypes.string.isRequired,
     ext: PropTypes.string.isRequired,
   })).isRequired,
+  selectAll: PropTypes.func.isRequired,
+  selectNone: PropTypes.func.isRequired,
 };
 
 const BookAdd = connect(mapStateToProps, mapDispatchToProps)(ConnectedBookAdd);
