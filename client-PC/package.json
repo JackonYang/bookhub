@@ -4,6 +4,7 @@
   "description": "book management and sharing",
   "main": "main.js",
   "scripts": {
+    "start": "concurrently \"npm run watch\" \"npm run start-electron\"",
     "start-electron": "webpack --config webpack.config.electron.js && electron .",
     "start-all": "npm run-script watch && npm start",
     "watch": "./node_modules/.bin/webpack-dev-server --config webpack.config.react.js",
@@ -14,6 +15,7 @@
   "author": "Jackon Yang",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^3.5.1",
     "electron": "^1.7.12",
     "filesize": "^3.6.0",
     "md5-file": "^3.2.3",
