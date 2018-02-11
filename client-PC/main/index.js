@@ -3,6 +3,8 @@ const url = require('url');
 const path = require('path');
 
 import createMainWindow from './main_window'
+import createMainMenu from './main_menu'
+
 import createBackgroundWindow from '../background/background_window'
 
 const {
@@ -17,7 +19,6 @@ let backgroundWindow;
 
 let addWindow;
 let preferencesWindow;
-let mainMenuTemplate;
 
 // Listen for app to be ready
 app.on('ready', () => {
@@ -31,8 +32,7 @@ app.on('ready', () => {
   backgroundWindow = createBackgroundWindow();
 
   // build menu from template
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-  Menu.setApplicationMenu(mainMenu);
+  Menu.setApplicationMenu(createMainMenu(createAddWindows, createPreferencesWindows));
 });
 
 // handle create addWindow
@@ -92,63 +92,3 @@ ipcMain.on('bg:started', function (e, msg) {
 ipcMain.on('scan:book:found', function (e, msg) {
   addWindow.webContents.send('scan:book:found', msg);
 })
-
-mainMenuTemplate = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'Add Books',
-        accelerator: process.platform === 'darwin' ? 'Command+N' : 'Ctrl+N',
-        click() {
-          createAddWindows();
-        },
-      },
-      {
-        label: 'Preferences',
-        accelerator: process.platform === 'darwin' ? 'Command+,' : 'Ctrl+,',
-        click() {
-          createPreferencesWindows();
-        },
-      },
-      {
-        label: 'Close Current Window',
-        accelerator: process.platform === 'darwin' ? 'Command+W' : 'Ctrl+W',
-        click(item, focusedWindow) {
-          focusedWindow.close();
-        },
-      },
-      {
-        label: 'Quit',
-        accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-        click() {
-          app.quit();
-        },
-      },
-    ],
-  },
-];
-
-// if Mac, add empty object to menu
-if (process.platform === 'darwin') {
-  mainMenuTemplate.unshift({});
-}
-
-// Add developer tools if not in prod
-if (process.env.NODE_ENV !== 'production') {
-  mainMenuTemplate.push({
-    label: 'Developer Tools',
-    submenu: [
-      {
-        label: 'Toggle DevTools',
-        accelerator: process.platform === 'darwin' ? 'Command+I' : 'Ctrl+I',
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        },
-      },
-      {
-        role: 'reload',
-      },
-    ],
-  });
-}
