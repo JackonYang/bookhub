@@ -6,7 +6,6 @@
   "scripts": {
     "start": "concurrently \"npm run watch\" \"npm run start-electron\"",
     "start-electron": "webpack --config webpack.config.electron.js && electron .",
-    "start-all": "npm run-script watch && npm start",
     "watch": "./node_modules/.bin/webpack-dev-server --config webpack.config.react.js",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/icon.icns --prune=true --out=release-builds",
     "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BookHub\"",
