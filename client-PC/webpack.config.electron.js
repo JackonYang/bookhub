@@ -3,13 +3,13 @@ const path = require('path');
 
 module.exports = {
   target: 'electron-renderer',
-  entry: [
-    './main/index.js',
-  ],
+  entry: {
+    main: './main/index.js',
+  },
   output: {
     path: __dirname,
     // publicPath: path.join(__dirname, 'src'),
-    filename: 'main.js',
+    filename: "[name].js"
   },
   // https://github.com/electron/electron/issues/5107
   node: {
