@@ -6,15 +6,12 @@ import styles from './table.scss';
 // import radioIcon from '../../../assets/images/radio-icon.png';
 // import radioIconChecked from '../../../assets/images/right.png';
 import Trow from './trow/index';
-import { toggleSelect, toggleStar } from '../../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
 });
 
-const mapDispatchToProps = dispatch => ({
-  toggleStar: idx => dispatch(toggleStar(idx)),
-  toggleSelect: idx => dispatch(toggleSelect(idx)),
+const mapDispatchToProps = () => ({
 });
 
 class ConnectedTable extends React.PureComponent {
@@ -88,7 +85,6 @@ class ConnectedTable extends React.PureComponent {
       row={row}
       idx={idx}
       thArrays={this.props.colTitles}
-      handleSelect={this.props.toggleStar}
     />));
 
     return (
@@ -103,7 +99,6 @@ class ConnectedTable extends React.PureComponent {
 }
 
 ConnectedTable.propTypes = {
-  toggleStar: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['add', 'search']).isRequired,
   colTitles: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,

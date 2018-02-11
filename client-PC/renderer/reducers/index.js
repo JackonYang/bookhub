@@ -42,14 +42,19 @@ export default (state = initialState, action) => {
         ],
       });
     }
-    case TOGGLE_SELECT: {
-      const tempSelect = [...state.selectedList];
-      tempSelect[action.idx] = !tempSelect[action.idx];
 
-      return {
-        ...state,
-        selectedList: tempSelect,
-      };
+    // Select for AddBooks Page
+    case TOGGLE_SELECT: {
+      return Object.assign({}, state, {
+        scanLog: state.scanLog.map((bookMeta, idx) => {
+          if (idx === action.idx) {
+            return Object.assign({}, bookMeta, {
+              isSelected: !bookMeta.isSelected,
+            });
+          }
+          return bookMeta;
+        }),
+      });
     }
     case SELECT_ALL: {
       return Object.assign({}, state, {
@@ -65,6 +70,7 @@ export default (state = initialState, action) => {
         })),
       });
     }
+
     case TOGGLE_STAR: {
       return Object.assign({}, state, {
         bookList: state.bookList.map((bookMeta, idx) => {
