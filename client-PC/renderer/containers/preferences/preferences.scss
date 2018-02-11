@@ -1,0 +1,22 @@
+@import "../../common/variables.scss";
+
+.wrap {
+}
+.content {
+  width: 76%;
+  margin: auto;
+  padding: 48px 30px 31px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  border-radius: 8px;
+
+  h1 {
+    margin: 48px auto 42px;
+    color: #000;
+    font-size: 42.39px;
+    text-align: center;
+  }
+}
+
+.form {
+
+}
