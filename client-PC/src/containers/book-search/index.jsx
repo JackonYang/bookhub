@@ -40,12 +40,15 @@ class BookSearch extends React.Component {
     console.log('searchMore', this);
   }
   render() {
-    console.log('sss');
     return (
       <div className={styles.wrap}>
         <TopFixed type="search" />
         <div className={styles.contentWrap}>
-          <Table type="search" colTitles={colTitles} bookList={this.store.getState().bookList} col1="isStared" {...this.props} />
+          <Table
+            type="search"
+            colTitles={colTitles}
+            bookList={this.store.getState().bookList}
+          />
         </div>
         <div className={styles.operationGrop}>
           <button className={styles.addHub} onClick={this.searchMore}>搜索更多</button>

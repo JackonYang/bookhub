@@ -78,10 +78,9 @@ class BookAdd extends React.Component {
         <TopFixed type="add" />
         <div className={styles.contentWrap}>
           <Table
-            col1="selecte"
+            type="add"
             colTitles={colTitles}
             bookList={this.store.getState().scanLog}
-            {...this.props}
           />
         </div>
         <div className={styles.operationGrop}>

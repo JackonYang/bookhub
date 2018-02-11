@@ -1,26 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import styles from './table.scss';
 // import radioIcon from '../../../assets/images/radio-icon.png';
 // import radioIconChecked from '../../../assets/images/right.png';
 import Trow from './trow/index';
 import { toggleSelect, toggleStar } from '../../actions';
 
+const mapStateToProps = (state, ownProps) => ({
+  ...ownProps,
+});
 
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.store = props.store;
-    this.state = {
-      // selectedList: [],
-      // secondsElapsed: 0,
-      // selectedAll: false,
-      // deselectAll: false,
-    };
+const mapDispatchToProps = dispatch => ({
+  toggleStar: idx => dispatch(toggleStar(idx)),
+  toggleSelect: idx => dispatch(toggleSelect(idx)),
+});
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleStar = this.handleStar.bind(this);
-  }
+class ConnectedTable extends React.PureComponent {
   // componentWillMount() {
   //   console.log('componentWillMount');
   // }
@@ -57,28 +54,6 @@ class Table extends React.Component {
   //   nextProps.store.getState().isUnSelectAll);
   // }
 
-  handleSelect(idx) {
-    console.log('handleSelect', idx);
-    this.store.dispatch(toggleSelect(idx));
-    // const tempList = [...this.state.selectedList];
-    // tempList[idx] = !tempList[idx];
-    // // tempList[idx] = typeof tempList[idxx] === 'undefined' ? true : !tempList[idx];
-    // this.setState({
-    //   selectedList: [...tempList],
-    // });
-    // console.log(this.state.selectedList);
-  }
-  handleStar(idx) {
-    console.log('handleStar', idx);
-    this.store.dispatch(toggleStar(idx));
-    // const tempList = [...this.state.selectedList];
-    // tempList[idx] = !tempList[idx];
-    // // tempList[idx] = typeof tempList[idxx] === 'undefined' ? true : !tempList[idx];
-    // this.setState({
-    //   selectedList: [...tempList],
-    // });
-    // console.log(this.state.selectedList);
-  }
   render() {
     let ths = [];
     let trows = [];
@@ -113,8 +88,7 @@ class Table extends React.Component {
       row={row}
       idx={idx}
       thArrays={this.props.colTitles}
-      handleSelect={this.handleStar}
-      isSelected={!!row[this.props.col1]}
+      handleSelect={this.props.toggleStar}
     />));
 
     return (
@@ -128,42 +102,9 @@ class Table extends React.Component {
   }
 }
 
-/*  <div className={styles.row}>
-  <div className={styles.cell}>
-    Luke Peters
-  </div>
-  <div className={styles.cell}>
-    25
-  </div>
-  <div className={styles.cell}>
-    Freelance Web Developer
-  </div>
-  <div className={styles.cell}>
-    Brookline, MA
-  </div>
-</div>
-<div className={styles.row}>
-  <div className={styles.cell}>
-    Luke Peters
-  </div>
-  <div className={styles.cell}>
-    25
-  </div>
-  <div className={styles.cell}>
-    Freelance Web Developer
-  </div>
-  <div className={styles.cell}>
-    Brookline, MA
-  </div> */
-
-Table.propTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-  }).isRequired,
-  // table 类型
-  type: PropTypes.oneOf(['add', 'search']),
-  col1: PropTypes.oneOf(['star', 'selecte']).isRequired,
+ConnectedTable.propTypes = {
+  toggleStar: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(['add', 'search']).isRequired,
   colTitles: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
     file: PropTypes.string.isRequired,
@@ -174,8 +115,6 @@ Table.propTypes = {
   })).isRequired,
 };
 
-Table.defaultProps = {
-  type: 'add',
-};
+const Table = connect(mapStateToProps, mapDispatchToProps)(ConnectedTable);
 
 export default Table;

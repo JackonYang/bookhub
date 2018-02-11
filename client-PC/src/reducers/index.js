@@ -74,13 +74,16 @@ export default (state = initialState, action) => {
       };
     }
     case TOGGLE_STAR: {
-      const tempStar = [...state.starList];
-      tempStar[action.idx] = !tempStar[action.idx];
-
-      return {
-        ...state,
-        starList: tempStar,
-      };
+      return Object.assign({}, state, {
+        bookList: state.bookList.map((bookMeta, idx) => {
+          if (idx === action.idx) {
+            return Object.assign({}, bookMeta, {
+              isStared: !bookMeta.isStared,
+            });
+          }
+          return bookMeta;
+        }),
+      });
     }
     default:
       return state;
