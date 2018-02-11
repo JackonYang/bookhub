@@ -12,6 +12,7 @@ const {
 } = electron;
 
 let mainWindow;
+let backgroundWindow;
 
 let addWindow;
 let preferencesWindow;
@@ -38,6 +39,18 @@ app.on('ready', () => {
   mainWindow.on('closed', () => {
     app.quit();
   });
+
+  backgroundWindow = new BrowserWindow({
+    show: false,
+    nodeIntegrationInWorker: true,
+  });
+
+    // Load html into window
+    backgroundWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'public/background/index.html'),
+      protocol: 'file:',
+      slashes: true,
+    }));
 
   // build menu from template
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
@@ -94,6 +107,10 @@ ipcMain.on('scan:path:change', function (e, path_name) {
   scanPath(path_name,  (msgKey, payload) => {
     addWindow.webContents.send(msgKey, payload);
   });
+})
+
+ipcMain.on('bg:started', function (e, msg) {
+  console.log(msg);
 })
 
 mainMenuTemplate = [
