@@ -1,8 +1,6 @@
-const electron = require('electron');
-
-const {
+import electron, {
   BrowserWindow,
-} = electron;
+} from 'electron';
 
 function createMainWindow() {
   const electronScreen = electron.screen;

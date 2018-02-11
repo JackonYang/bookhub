@@ -1,9 +1,7 @@
-const electron = require('electron');
-
-const {
+import {
   Menu,
   app,
-} = electron;
+} from 'electron';
 
 function createMainMenu(
   switchToAddBooks,

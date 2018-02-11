@@ -1,10 +1,9 @@
-const electron = require('electron');
-const url = require('url');
-const path = require('path');
-
-const {
+import {
   BrowserWindow,
-} = electron;
+} from 'electron';
+
+import url from 'url';
+import path from 'path';
 
 function createBackgroundWindow() {
   const backgroundWindow = new BrowserWindow({
