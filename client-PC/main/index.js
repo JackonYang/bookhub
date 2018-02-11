@@ -1,4 +1,4 @@
-import scanPath from './src/file-manager/scanner'
+import scanPath from '../src/file-manager/scanner'
 
 const electron = require('electron');
 const url = require('url');

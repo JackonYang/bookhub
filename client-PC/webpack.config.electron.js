@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
   target: 'electron-renderer',
   entry: [
-    './main.src.js',
+    './main/index.js',
   ],
   output: {
     path: __dirname,

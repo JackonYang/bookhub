@@ -4,7 +4,7 @@
   "description": "book management and sharing",
   "main": "main.js",
   "scripts": {
-    "start": "webpack --config webpack.electron.config.js && electron .",
+    "start-electron": "webpack --config webpack.config.electron.js && electron .",
     "start-all": "npm run-script watch && npm start",
     "watch": "./node_modules/.bin/webpack-dev-server",
     "build": "react-scripts build",
