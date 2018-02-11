@@ -71,13 +71,13 @@ ipcMain.on('scan:task:new', (e, targetPath) => {
 });
 
 ipcMain.on('scan:heartbeat', (e, msg) => {
-  // console.log(msg);
+  console.log(msg);
 });
 
 ipcMain.on('scan:error', (e, msg) => {
-  // console.log(msg);
+  console.log(msg);
 });
 
-ipcMain.on('scan:book:found', (e, msg) => {
-  mainWindow.webContents.send('scan:book:found', msg);
+ipcMain.on('scan:book:found', (e, metaInfo) => {
+  mainWindow.webContents.send('scan:book:found', metaInfo);
 });
