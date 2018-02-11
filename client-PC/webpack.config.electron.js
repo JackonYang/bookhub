@@ -5,6 +5,7 @@ module.exports = {
   target: 'electron-renderer',
   entry: {
     main: './main/index.js',
+    './public/background/bundle': './background/index.js',
   },
   output: {
     path: __dirname,
