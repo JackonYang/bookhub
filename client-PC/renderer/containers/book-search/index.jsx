@@ -10,7 +10,7 @@ import styles from './book-search.scss';
 const colTitles = [
   {
     text: 'Title',
-    file: 'rawname',
+    file: 'titleDisplay',
   },
   {
     text: 'Author',
@@ -18,7 +18,7 @@ const colTitles = [
   },
   {
     text: 'Type',
-    file: 'ext',
+    file: 'extname',
   },
   {
     text: 'Last Read',

@@ -11,28 +11,7 @@ import {
 } from '../actions';
 
 const initialState = {
-  bookList: [
-    {
-      ext: 'pdf',
-      md5: '4fsaffdfad',
-      path: '/Users/vivian/Music/',
-      rawname: 'What are day',
-      sizeBytes: 1611161,
-      sizeReadable: '1.4 MB',
-      lastRead: '24 Jan 2018',
-      isStared: true,
-    },
-    {
-      ext: 'pdf',
-      md5: 'ddsadasd',
-      path: '/Users/vivian/Music/',
-      rawname: 'What ddsd day',
-      sizeBytes: 1611162,
-      sizeReadable: '1.58 MB',
-      lastRead: '26 Oct 2017',
-      isStared: false,
-    },
-  ],
+  bookList: [],
   scanLog: [],
 };
 
@@ -96,6 +75,7 @@ export default (state = initialState, action) => {
       if (!updated) {
         newState.bookList.push(action.bookMeta);
       }
+
       return newState;
     }
 
