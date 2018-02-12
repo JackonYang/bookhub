@@ -6,7 +6,12 @@ import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-add.scss';
 
-import { addBookMeta, selectAll, selectNone } from '../../actions';
+import {
+  addBookMeta,
+  addBookToRepo,
+  selectAll,
+  selectNone,
+} from '../../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   bookList: state.scanLog,
@@ -14,6 +19,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  addBookMeta: metaInfo => dispatch(addBookMeta(metaInfo)),
+  addBookToRepo: (md5, srcPath, bookMeta) => dispatch(addBookToRepo(md5, srcPath, bookMeta)),
   selectAll: () => dispatch(selectAll()),
   selectNone: () => dispatch(selectNone()),
 });
@@ -58,18 +65,22 @@ const colTitles = [
 
 /* eslint-disable react/prefer-stateless-function */
 class ConnectedBookAdd extends React.Component {
-  constructor(props) {
-    super(props);
-    this.store = props.store;
+  constructor() {
+    super();
+    this.addBooksToRepo = this.addBooksToRepo.bind(this);
   }
   componentDidMount() {
     ipcRenderer.on('scan:book:found', (e, metaInfo) => {
-      // console.log(this.store.getState().scanLog.length);
-      this.store.dispatch(addBookMeta(metaInfo));
+      this.props.addBookMeta(metaInfo);
     });
   }
-  addToStore() {
-    console.log('Add To Library', this);
+  addBooksToRepo() {
+    this.props.bookList.forEach(bookMeta => {
+      if (bookMeta.isSelected && bookMeta.md5) {
+        this.props.addBookToRepo(bookMeta.md5, bookMeta.srcPath, bookMeta);
+      }
+      // log error is !bookMeta.md5 or !bookMeta.srcPath
+    });
   }
   render() {
     return (
@@ -87,7 +98,12 @@ class ConnectedBookAdd extends React.Component {
             <span role="button" className={styles.selectBtn} onClick={this.props.selectAll}>All</span>
             <span role="button" className={styles.selectBtn} onClick={this.props.selectNone}>None</span>
           </div>
-          <button className={styles.addHub} onClick={this.addToStore}>Add To Library</button>
+          <button
+            className={styles.addHub}
+            onClick={this.addBooksToRepo}
+          >
+            Add To Library
+          </button>
         </div>
       </div>
     );
@@ -95,14 +111,12 @@ class ConnectedBookAdd extends React.Component {
 }
 
 ConnectedBookAdd.propTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-  }).isRequired,
   bookList: PropTypes.arrayOf(PropTypes.shape({
     md5: PropTypes.string.isRequired,
     ext: PropTypes.string.isRequired,
   })).isRequired,
+  addBookMeta: PropTypes.func.isRequired,
+  addBookToRepo: PropTypes.func.isRequired,
   selectAll: PropTypes.func.isRequired,
   selectNone: PropTypes.func.isRequired,
 };
