@@ -78,6 +78,6 @@ ipcMain.on('scan:error', (e, msg) => {
   console.log(msg);
 });
 
-ipcMain.on('scan:book:found', (e, metaInfo) => {
-  mainWindow.webContents.send('scan:book:found', metaInfo);
+ipcMain.on('scan:file:found', (e, fileInfo) => {
+  mainWindow.webContents.send('scan:file:found', fileInfo);
 });

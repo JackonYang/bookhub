@@ -14,8 +14,8 @@ export const TOGGLE_STAR = 'TOGGLE_STAR';
  * action creators
  */
 
-export function addBookMeta(metaInfo) {
-  return { type: BOOK_SCANNED, metaInfo };
+export function addFileInfo(fileInfo) {
+  return { type: BOOK_SCANNED, ...fileInfo };
 }
 
 export function addBookToRepo(md5, srcPath, bookMeta) {

@@ -7,7 +7,7 @@ import Table from '../../components/table/index';
 import styles from './book-add.scss';
 
 import {
-  addBookMeta,
+  addFileInfo,
   addBookToRepo,
   selectAll,
   selectNone,
@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addBookMeta: metaInfo => dispatch(addBookMeta(metaInfo)),
+  addFileInfo: fileInfo => dispatch(addFileInfo(fileInfo)),
   addBookToRepo: (md5, srcPath, bookMeta) => dispatch(addBookToRepo(md5, srcPath, bookMeta)),
   selectAll: () => dispatch(selectAll()),
   selectNone: () => dispatch(selectNone()),
@@ -70,8 +70,8 @@ class ConnectedBookAdd extends React.Component {
     this.addBooksToRepo = this.addBooksToRepo.bind(this);
   }
   componentDidMount() {
-    ipcRenderer.on('scan:book:found', (e, metaInfo) => {
-      this.props.addBookMeta(metaInfo);
+    ipcRenderer.on('scan:file:found', (e, fileInfo) => {
+      this.props.addFileInfo(fileInfo);
     });
   }
   addBooksToRepo() {
@@ -115,7 +115,7 @@ ConnectedBookAdd.propTypes = {
     md5: PropTypes.string.isRequired,
     ext: PropTypes.string.isRequired,
   })).isRequired,
-  addBookMeta: PropTypes.func.isRequired,
+  addFileInfo: PropTypes.func.isRequired,
   addBookToRepo: PropTypes.func.isRequired,
   selectAll: PropTypes.func.isRequired,
   selectNone: PropTypes.func.isRequired,

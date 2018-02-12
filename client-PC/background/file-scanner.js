@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const wildcard = require('wildcard');
-const filesize = require('filesize');
+// const filesize = require('filesize');
 const md5File = require('md5-file');
 
 
@@ -46,22 +46,21 @@ function scanPath(targetPath, dispatchMsg) {
 
   // else -> file
   // match target rule
-  const ext = path.extname(targetPath);
-  if (!targetPtn.includes(ext)) {
+  const extname = path.extname(targetPath);
+  if (!targetPtn.includes(extname)) {
     return 0;
   }
 
   const basename = path.basename(targetPath, ext);
 
-  const metaInfo = {
-    rawname: basename,
-    path: path.dirname(targetPath),
-    ext,
-    sizeBytes: stat.size,
-    sizeReadable: filesize(stat.size),
+  const fileInfo = {
     md5: md5File.sync(targetPath),
+    srcFullPath: targetPath,
+    extname,
+    sizeBytes: stat.size,
+    // sizeReadable: filesize(stat.size),
   };
-  dispatchMsg('scan:book:found', metaInfo);
+  dispatchMsg('scan:file:found', fileInfo);
   return 1;
 }
 
