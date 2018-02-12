@@ -106,7 +106,6 @@ ConnectedTable.propTypes = {
   })).isRequired,
   bookList: PropTypes.arrayOf(PropTypes.shape({
     md5: PropTypes.string.isRequired,
-    ext: PropTypes.string.isRequired,
   })).isRequired,
 };
 

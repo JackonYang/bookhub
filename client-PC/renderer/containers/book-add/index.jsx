@@ -31,36 +31,24 @@ const { ipcRenderer } = window.require('electron');
 const colTitles = [
   {
     text: 'Title',
-    file: 'rawname',
+    file: 'titleDisplay',
   },
-  // {
-  //   text: 'MD5',
-  //   file: 'md5',
-  // },
-  // {
-  //   text: 'Year',
-  //   file: 'year',
-  // },
   {
-    text: 'Path',
-    file: 'path',
+    text: 'Type',
+    file: 'extname',
   },
-  // {
-  //   text: 'Type',
-  //   file: 'ext',
-  // },
   {
     text: 'Size',
     file: 'sizeReadable',
   },
   // {
-  //   text: 'Create Time',
-  //   file: 'createTime',
+  //   text: 'MD5',
+  //   file: 'md5',
   // },
-  // {
-  //   text: 'Tags',
-  //   file: 'tags',
-  // },
+  {
+    text: 'Path',
+    file: 'srcFullPath',
+  },
 ];
 
 /* eslint-disable react/prefer-stateless-function */
@@ -113,7 +101,6 @@ class ConnectedBookAdd extends React.Component {
 ConnectedBookAdd.propTypes = {
   bookList: PropTypes.arrayOf(PropTypes.shape({
     md5: PropTypes.string.isRequired,
-    ext: PropTypes.string.isRequired,
   })).isRequired,
   addFileInfo: PropTypes.func.isRequired,
   addBookToRepo: PropTypes.func.isRequired,

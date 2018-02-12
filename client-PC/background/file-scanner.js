@@ -51,14 +51,11 @@ function scanPath(targetPath, dispatchMsg) {
     return 0;
   }
 
-  const basename = path.basename(targetPath, ext);
-
   const fileInfo = {
     md5: md5File.sync(targetPath),
     srcFullPath: targetPath,
     extname,
     sizeBytes: stat.size,
-    // sizeReadable: filesize(stat.size),
   };
   dispatchMsg('scan:file:found', fileInfo);
   return 1;

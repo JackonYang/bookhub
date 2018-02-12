@@ -1,3 +1,6 @@
+import filesize from 'filesize';
+import path from 'path';
+
 import {
   BOOK_SCANNED,
   SELECT_ALL,
@@ -35,12 +38,45 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case BOOK_SCANNED: {
-      return Object.assign({}, state, {
-        scanLog: [
-          ...state.scanLog,
-          action.metaInfo,
-        ],
+      let updated = false;
+      const newState = Object.assign({}, state, {
+        scanLog: state.scanLog.map(bookMeta => {
+          if (bookMeta.md5 === action.md5) {
+            updated = true;
+            return Object.assign({}, bookMeta, {
+              srcFullPath: [
+                action.srcFullPath,
+                ...bookMeta.srcFullPath,
+              ],
+            });
+          }
+          return bookMeta;
+        }),
       });
+
+      if (!updated) {
+        const {
+          extname,
+          srcFullPath,
+          sizeBytes,
+        } = action;
+
+        // better algorithm. add titleAlias, standardTitle etc.
+        const titleDisplay = path.basename(srcFullPath, extname);
+
+        const sizeReadable = filesize(sizeBytes);
+
+        newState.scanLog.push({
+          md5: action.md5,
+          titleDisplay,
+          extname,
+          sizeBytes,
+          sizeReadable,
+          // local info
+          srcFullPath,
+        });
+      }
+      return newState;
     }
 
     // Select for AddBooks Page
