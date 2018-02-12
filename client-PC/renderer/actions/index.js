@@ -18,11 +18,11 @@ export function addFileInfo(fileInfo) {
   return { type: BOOK_SCANNED, ...fileInfo };
 }
 
-export function addBookToRepo(md5, srcPath, bookMeta) {
+export function addBookToRepo(md5, srcFullPath, bookMeta) {
   return {
     type: ADD_BOOK_TO_REPO,
     md5,
-    srcPath,
+    srcFullPath,
     bookMeta,
   };
 }

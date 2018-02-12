@@ -20,7 +20,9 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   addFileInfo: fileInfo => dispatch(addFileInfo(fileInfo)),
-  addBookToRepo: (md5, srcPath, bookMeta) => dispatch(addBookToRepo(md5, srcPath, bookMeta)),
+  addBookToRepo: (md5, srcFullPath, bookMeta) => (
+    dispatch(addBookToRepo(md5, srcFullPath, bookMeta))
+  ),
   selectAll: () => dispatch(selectAll()),
   selectNone: () => dispatch(selectNone()),
 });
@@ -64,10 +66,10 @@ class ConnectedBookAdd extends React.Component {
   }
   addBooksToRepo() {
     this.props.bookList.forEach(bookMeta => {
-      if (bookMeta.isSelected && bookMeta.md5) {
-        this.props.addBookToRepo(bookMeta.md5, bookMeta.srcPath, bookMeta);
+      if (bookMeta.isSelected && bookMeta.md5 && bookMeta.srcFullPath) {
+        this.props.addBookToRepo(bookMeta.md5, bookMeta.srcFullPath, bookMeta);
       }
-      // log error is !bookMeta.md5 or !bookMeta.srcPath
+      // log error is !bookMeta.md5 or !bookMeta.srcFullPath
     });
   }
   render() {

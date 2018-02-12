@@ -3,6 +3,7 @@ import path from 'path';
 
 import {
   BOOK_SCANNED,
+  ADD_BOOK_TO_REPO,
   SELECT_ALL,
   SELECT_NONE,
   TOGGLE_SELECT,
@@ -75,6 +76,25 @@ export default (state = initialState, action) => {
           // local info
           srcFullPath,
         });
+      }
+      return newState;
+    }
+    case ADD_BOOK_TO_REPO: {
+      let updated = false;
+      const newState = Object.assign({}, state, {
+        bookList: state.bookList.map(bookMeta => {
+          if (bookMeta.md5 === action.md5) {
+            updated = true;
+            return Object.assign({}, bookMeta, {
+              srcFullPath: action.srcFullPath,
+            });
+          }
+          return bookMeta;
+        }),
+      });
+
+      if (!updated) {
+        newState.bookList.push(action.bookMeta);
       }
       return newState;
     }
