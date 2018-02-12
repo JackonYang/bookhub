@@ -16,6 +16,8 @@ import styles from './entry.scss';
 
 import rootReducer from './reducers';
 
+const { ipcRenderer } = window.require('electron');
+
 const store = createStore(rootReducer);
 
 const routes = [
@@ -55,6 +57,11 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
+  }
+  componentDidMount() {
+    ipcRenderer.on('windown:location:change', (e, newLocation) => {
+      window.location.assign(newLocation);
+    });
   }
   render() {
     return (

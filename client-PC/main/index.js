@@ -16,36 +16,27 @@ let mainWindow;
 let backgroundWindow;
 
 function switchToSearchBooks() {
+  mainWindow.webContents.send('windown:location:change', '#/');
+}
+
+function switchToAddBooks() {
+  mainWindow.webContents.send('windown:location:change', '#/add-books');
+}
+
+function switchToPreferences() {
+  mainWindow.webContents.send('windown:location:change', '#/preferences');
+}
+
+// Listen for app to be ready
+app.on('ready', () => {
+  mainWindow = createMainWindow();
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'public/index.html'),
     protocol: 'file:',
     hash: '#/',
     slashes: false,
   }));
-}
-
-function switchToAddBooks() {
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'public/index.html'),
-    protocol: 'file:',
-    hash: '#/add-books',
-    slashes: false,
-  }));
-}
-
-function switchToPreferences() {
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'public/index.html'),
-    protocol: 'file:',
-    hash: '#/preferences',
-    slashes: false,
-  }));
-}
-
-// Listen for app to be ready
-app.on('ready', () => {
-  mainWindow = createMainWindow();
-  switchToSearchBooks();
 
   // Quit app when closed
   mainWindow.on('closed', () => {
