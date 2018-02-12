@@ -47,7 +47,7 @@ function ConnectedTableRow(props) {
   /* eslint-disable react/jsx-no-bind  */
   tds.unshift(
     <div
-      key={`select-${idx}`}
+      key={`select-${row.md5}`}
       td-role="select"
       role="checkbox"
       onClick={() => handleSelect(idx)}
@@ -57,7 +57,7 @@ function ConnectedTableRow(props) {
     </div>);
 
   return (
-    <div className={styles.row}>
+    <div key={row.md5} className={styles.row}>
       {tds}
     </div>
   );

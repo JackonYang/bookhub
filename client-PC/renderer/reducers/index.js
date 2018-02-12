@@ -3,6 +3,7 @@ import path from 'path';
 
 import {
   BOOK_SCANNED,
+  ADD_BOOK_TO_REPO,
   SELECT_ALL,
   SELECT_NONE,
   TOGGLE_SELECT,
@@ -10,28 +11,7 @@ import {
 } from '../actions';
 
 const initialState = {
-  bookList: [
-    {
-      ext: 'pdf',
-      md5: '4fsaffdfad',
-      path: '/Users/vivian/Music/',
-      rawname: 'What are day',
-      sizeBytes: 1611161,
-      sizeReadable: '1.4 MB',
-      lastRead: '24 Jan 2018',
-      isStared: true,
-    },
-    {
-      ext: 'pdf',
-      md5: 'ddsadasd',
-      path: '/Users/vivian/Music/',
-      rawname: 'What ddsd day',
-      sizeBytes: 1611162,
-      sizeReadable: '1.58 MB',
-      lastRead: '26 Oct 2017',
-      isStared: false,
-    },
-  ],
+  bookList: [],
   scanLog: [],
 };
 
@@ -76,6 +56,26 @@ export default (state = initialState, action) => {
           srcFullPath,
         });
       }
+      return newState;
+    }
+    case ADD_BOOK_TO_REPO: {
+      let updated = false;
+      const newState = Object.assign({}, state, {
+        bookList: state.bookList.map(bookMeta => {
+          if (bookMeta.md5 === action.md5) {
+            updated = true;
+            return Object.assign({}, bookMeta, {
+              srcFullPath: action.srcFullPath,
+            });
+          }
+          return bookMeta;
+        }),
+      });
+
+      if (!updated) {
+        newState.bookList.push(action.bookMeta);
+      }
+
       return newState;
     }
 
