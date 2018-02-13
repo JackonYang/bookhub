@@ -19,6 +19,7 @@ $barLeft: 50px;
   white-space: nowrap;
   font-family: sans-serif;
   text-align: left;
+  vertical-align: middle;
 
   &:before {
     content:"";
@@ -34,6 +35,7 @@ $barLeft: 50px;
   display: inline-block;
   height: $barHeight;
   line-height: $barHeight;
+  color: $fontColor;
 }
 .file {
   input {
