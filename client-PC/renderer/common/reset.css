@@ -92,11 +92,21 @@ input, select {
 button {
   padding: 0;
   border: none;
+  cursor: pointer;
+}
+
+[role="button"] {
+  cursor: pointer;
 }
 
 button:focus {
   outline: none;
 }
+
+ul {
+    list-style:none;
+}
+
 /*私有*/
 #app {
   height: 100%;
