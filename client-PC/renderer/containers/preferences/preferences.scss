@@ -1,22 +1,98 @@
 @import "../../common/variables.scss";
 
+$btncolor: #007CBB;
+
 .wrap {
+  padding-top: 82px;
 }
 .content {
+  position: relative;
   width: 76%;
-  margin: auto;
-  padding: 48px 30px 31px;
+  height: 566px;
+  margin:  auto;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
   border-radius: 8px;
+  box-sizing: border-box;
 
   h1 {
-    margin: 48px auto 42px;
+    margin: 0  auto 42px;
     color: #000;
     font-size: 42.39px;
     text-align: center;
   }
 }
+.scrollContent {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 48px 30px 0;
+}
 
 .form {
 
+}
+
+.label {
+  display: inline-block;
+  width: 135px;
+  margin-right: 28px;
+  text-align: right;
+  font-size: 20px;
+}
+
+.libraryWrap {
+  margin-bottom: 36px;
+  min-width: 765px;
+}
+
+.monitorWrap {
+  display: flex;
+  min-width: 765px;
+  margin-bottom: 100px;
+
+  .label {
+    margin-top: 10px;
+  }
+  .add {
+    display: inline-block;
+    margin: 0 0 10px 21px;
+    align-self: flex-end;
+    width: 25px;
+    height: 25px;
+    background: url("../../../assets/images/add@3x.png") no-repeat center;
+    background-size: cover;
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 22px;
+  }
+}
+
+.btnWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 0 30px;
+  font-size: 12px;
+  text-align: center;
+  background-color: $opacityBg;
+
+  &>button {
+    line-height: 17px;
+    width: 78px;
+    height: 36px;
+    border-radius: 3px;
+  }
+
+  .cancel {
+    color: $btncolor;
+    background-color: $secondBg;
+    border: 1px solid $btncolor;
+  }
+  .save {
+    color: $secondBg;
+    background-color: $btncolor;
+    margin-left: 11px;
+  }
 }
