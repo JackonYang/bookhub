@@ -1,12 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-add.scss';
 
-import { addBookMeta, onUnSelectAll, onSelectAll } from '../../actions';
+import {
+  addFileInfo,
+  addBookToRepo,
+  selectAll,
+  selectNone,
+} from '../../actions';
 
+const mapStateToProps = (state, ownProps) => ({
+  bookList: state.scanLog,
+  ...ownProps,
+});
+
+const mapDispatchToProps = dispatch => ({
+  addFileInfo: fileInfo => dispatch(addFileInfo(fileInfo)),
+  addBookToRepo: (md5, srcFullPath, bookMeta) => (
+    dispatch(addBookToRepo(md5, srcFullPath, bookMeta))
+  ),
+  selectAll: () => dispatch(selectAll()),
+  selectNone: () => dispatch(selectNone()),
+});
 
 // https://github.com/electron/electron/issues/9920
 const { ipcRenderer } = window.require('electron');
@@ -14,63 +33,44 @@ const { ipcRenderer } = window.require('electron');
 const colTitles = [
   {
     text: 'Title',
-    file: 'rawname',
+    file: 'titleDisplay',
   },
-  // {
-  //   text: 'MD5',
-  //   file: 'md5',
-  // },
-  // {
-  //   text: 'Year',
-  //   file: 'year',
-  // },
   {
-    text: 'Path',
-    file: 'path',
+    text: 'Type',
+    file: 'extname',
   },
-  // {
-  //   text: 'Type',
-  //   file: 'ext',
-  // },
   {
     text: 'Size',
     file: 'sizeReadable',
   },
   // {
-  //   text: 'Create Time',
-  //   file: 'createTime',
+  //   text: 'MD5',
+  //   file: 'md5',
   // },
-  // {
-  //   text: 'Tags',
-  //   file: 'tags',
-  // },
+  {
+    text: 'Path',
+    file: 'srcFullPath',
+  },
 ];
 
 /* eslint-disable react/prefer-stateless-function */
-class BookAdd extends React.Component {
-  constructor(props) {
-    super(props);
-    this.store = props.store;
-
-    this.handleSelectAll = this.handleSelectAll.bind(this);
-    this.handleDeselectAll = this.handleDeselectAll.bind(this);
+class ConnectedBookAdd extends React.Component {
+  constructor() {
+    super();
+    this.addBooksToRepo = this.addBooksToRepo.bind(this);
   }
   componentDidMount() {
-    ipcRenderer.on('scan:book:found', (e, metaInfo) => {
-      // console.log(this.store.getState().scanLog.length);
-      this.store.dispatch(addBookMeta(metaInfo));
+    ipcRenderer.on('scan:file:found', (e, fileInfo) => {
+      this.props.addFileInfo(fileInfo);
     });
   }
-  handleSelectAll() {
-    console.log('selectall', this);
-    this.store.dispatch(onSelectAll());
-  }
-  handleDeselectAll() {
-    console.log('deselectall', this);
-    this.store.dispatch(onUnSelectAll());
-  }
-  addToStore() {
-    console.log('加入到书库', this);
+  addBooksToRepo() {
+    this.props.bookList.forEach(bookMeta => {
+      if (bookMeta.isSelected && bookMeta.md5 && bookMeta.srcFullPath) {
+        this.props.addBookToRepo(bookMeta.md5, bookMeta.srcFullPath, bookMeta);
+      }
+      // log error is !bookMeta.md5 or !bookMeta.srcFullPath
+    });
   }
   render() {
     return (
@@ -80,26 +80,36 @@ class BookAdd extends React.Component {
           <Table
             type="add"
             colTitles={colTitles}
-            bookList={this.store.getState().scanLog}
+            bookList={this.props.bookList}
           />
         </div>
         <div className={styles.operationGrop}>
           <div className={styles.leftBtnGrop}>
-            <span role="button" className={styles.selectBtn} onClick={this.handleSelectAll}>全选</span>
-            <span role="button" className={styles.selectBtn} onClick={this.handleDeselectAll}>全不选</span>
+            <span role="button" className={styles.selectBtn} onClick={this.props.selectAll}>All</span>
+            <span role="button" className={styles.selectBtn} onClick={this.props.selectNone}>None</span>
           </div>
-          <button className={styles.addHub} onClick={this.addToStore}>加入书库</button>
+          <button
+            className={styles.addHub}
+            onClick={this.addBooksToRepo}
+          >
+            Add To Library
+          </button>
         </div>
       </div>
     );
   }
 }
 
-BookAdd.propTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-  }).isRequired,
+ConnectedBookAdd.propTypes = {
+  bookList: PropTypes.arrayOf(PropTypes.shape({
+    md5: PropTypes.string.isRequired,
+  })).isRequired,
+  addFileInfo: PropTypes.func.isRequired,
+  addBookToRepo: PropTypes.func.isRequired,
+  selectAll: PropTypes.func.isRequired,
+  selectNone: PropTypes.func.isRequired,
 };
+
+const BookAdd = connect(mapStateToProps, mapDispatchToProps)(ConnectedBookAdd);
 
 export default BookAdd;

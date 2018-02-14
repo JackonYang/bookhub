@@ -1,11 +1,15 @@
 import { ipcRenderer } from 'electron';
 
-import scanPath from '../renderer/file-manager/scanner';
+import scanPath from './file-scanner';
 
-ipcRenderer.send('bg:started', 'background started!');
+// ipcRenderer.send('bg:started', 'background started!');
 
-ipcRenderer.on('book:scan', (e, targetPath) => {
+ipcRenderer.on('bg:scan:task:new', (e, targetPath) => {
   scanPath(targetPath, (msgKey, payload) => {
+    // msgKey may be:
+    // - scan:file:found
+    // - path not exists
+    // etc
     ipcRenderer.send(msgKey, payload);
   });
 });

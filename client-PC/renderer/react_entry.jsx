@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // import { HashRouter as Router, Route, Link } from 'react-router-dom';
 
@@ -14,6 +15,8 @@ import './common/reset.css?raw';
 import styles from './entry.scss';
 
 import rootReducer from './reducers';
+
+const { ipcRenderer } = window.require('electron');
 
 const store = createStore(rootReducer);
 
@@ -50,20 +53,40 @@ const routes = [
 //   }
 // }
 
-function Index(props) {
-  return (
-    <Router>
-      <div className={styles.wrap}>
-        {routes.map(route => (
-          <Route
-            key={route.path}
-            exact={route.exact}
-            path={route.path}
-            render={() => <route.main store={props.store} />}
-          />))}
-      </div>
-    </Router>);
+class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
+  componentDidMount() {
+    ipcRenderer.on('windown:location:change', (e, newLocation) => {
+      window.location.assign(newLocation);
+    });
+  }
+  render() {
+    return (
+      <Router>
+        <div className={styles.wrap}>
+          {routes.map(route => (
+            <Route
+              key={route.path}
+              exact={route.exact}
+              path={route.path}
+              render={() => <route.main store={this.props.store} />}
+            />))}
+        </div>
+      </Router>
+    );
+  }
 }
+
+Index.propTypes = {
+  store: PropTypes.shape({
+    dispatch: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 
 function render() {
   ReactDOM.render(

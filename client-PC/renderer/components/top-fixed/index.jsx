@@ -22,7 +22,7 @@ class TopFixed extends React.Component {
 
   handleFileChange(path) {
     // const fileKey = this.fileDom.files[0].path;
-    ipcRenderer.send('scan:path:change', path);
+    ipcRenderer.send('scan:task:new', path);
     console.log(this);
     // this.setState({ fileKey: path });
   }

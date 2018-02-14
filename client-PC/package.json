@@ -35,6 +35,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "css-loader": "^0.28.9",
     "electron-packager": "^10.1.2",
+    "electron-react-devtools": "^0.5.3",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-import-resolver-webpack": "^0.8.4",
     "extract-text-webpack-plugin": "^3.0.2",
