@@ -21,7 +21,7 @@ $selectBtnFz: 12px;
   right: 0;
   padding: 20px 0;
   text-align: center;
-  background-color: rgba(255, 255, 255, .7);
+  background-color: $opacityBg;
 
   .leftBtnGrop {
     display: inline-block;

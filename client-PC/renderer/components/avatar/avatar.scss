@@ -1,0 +1,14 @@
+.wrap {
+  position: absolute;
+  top: 24px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  font-size: 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.avatar {
+  width: 55px;
+  cursor: pointer;
+}
