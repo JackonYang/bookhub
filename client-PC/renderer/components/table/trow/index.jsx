@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import styles from './trow.scss';
-import radioIcon from '../../../../assets/images/radio-icon.png';
-import radioIconChecked from '../../../../assets/images/right.png';
-import star from '../../../../assets/images/star@3x.png';
-import starLighted from '../../../../assets/images/star-lighted@3x.png';
+import radioIcon from '../../../assets/images/radio-icon.png';
+import radioIconChecked from '../../../assets/images/right.png';
+import star from '../../../assets/images/star@3x.png';
+import starLighted from '../../../assets/images/star-lighted@3x.png';
 
 import { toggleSelect, toggleStar } from '../../../actions';
 
