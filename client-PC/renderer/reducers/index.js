@@ -55,7 +55,7 @@ export default (state = initialState, action) => {
           sizeBytes,
           sizeReadable,
           // local info
-          srcFullPath,
+          srcFullPath: [srcFullPath],
         });
       }
       return newState;
