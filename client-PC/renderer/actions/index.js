@@ -10,6 +10,7 @@ export const SELECT_ALL = 'SELECT_ALL';
 export const SELECT_NONE = 'SELECT_NONE';
 export const TOGGLE_SELECT = 'TOGGLE_SELECT';
 export const TOGGLE_STAR = 'TOGGLE_STAR';
+export const UPDATE_QUERY = 'UPDATE_QUERY';
 
 /*
  * action creators
@@ -46,4 +47,8 @@ export function toggleStar(idx) {
 
 export function toggleSelect(idx) {
   return { type: TOGGLE_SELECT, idx };
+}
+
+export function updateQuery(query) {
+  return { type: UPDATE_QUERY, query };
 }
