@@ -7,8 +7,15 @@ import Table from '../../components/table/index';
 import styles from './book-search.scss';
 // import { addBookMeta } from '../../actions';
 
+function filterBooks(fullData, query) {
+  if (!query) {
+    return fullData;
+  }
+  return fullData.filter(t => t.titleDisplay.toLowerCase().includes(query));
+}
+
 const mapStateToProps = (state, ownProps) => ({
-  bookList: state.bookList,
+  bookList: filterBooks(state.bookList, state.query),
   ...ownProps,
 });
 

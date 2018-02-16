@@ -9,10 +9,12 @@ import {
   SELECT_NONE,
   TOGGLE_SELECT,
   TOGGLE_STAR,
+  UPDATE_QUERY,
 } from '../actions';
 
 const initialState = {
   bookList: [],
+  query: '',
   scanLog: [],
 };
 
@@ -83,6 +85,12 @@ export default (state = initialState, action) => {
     case CLEAR_SCAN_LOG: {
       return Object.assign({}, state, {
         scanLog: [],
+      });
+    }
+
+    case UPDATE_QUERY: {
+      return Object.assign({}, state, {
+        query: action.query.toLowerCase(),
       });
     }
 
