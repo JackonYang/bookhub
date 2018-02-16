@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { execFile } from 'child_process';
 
 import styles from './trow.scss';
 import radioIcon from '../../../assets/images/radio-icon.png';
@@ -18,6 +19,18 @@ const mapDispatchToProps = dispatch => ({
   toggleSelect: idx => dispatch(toggleSelect(idx)),
   toggleStar: idx => dispatch(toggleStar(idx)),
 });
+
+function openFile(srcPath) {
+  const platformCmd = {
+    win32: 'start', // win7 32bit, win7 64bit
+    cygwin: 'start', // cygwin
+    linux2: 'xdg-open', // ubuntu 12.04 64bit
+    darwin: 'open', // Mac
+  };
+  return () => {
+    execFile(platformCmd[process.platform], [srcPath[0]]);
+  };
+}
 
 function ConnectedTableRow(props) {
   const {
@@ -57,7 +70,11 @@ function ConnectedTableRow(props) {
     </div>);
 
   return (
-    <div key={row.md5} className={styles.row}>
+    <div
+      key={row.md5}
+      className={styles.row}
+      onDoubleClick={openFile(row.srcFullPath)}
+    >
       {tds}
     </div>
   );
