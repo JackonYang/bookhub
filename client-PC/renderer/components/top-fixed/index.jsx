@@ -35,17 +35,13 @@ function ConnectedTopFixed(props) {
   return (
     <div className={styles.wrap}>
       <button className={styles.close} onClick={handleClose} />
-      {props.type === 'add' ? fileInput() : <SearchInput />}
+      {props.type === 'add-book' ? fileInput() : <SearchInput />}
     </div>
   );
 }
 
 ConnectedTopFixed.propTypes = {
-  type: PropTypes.string,
-};
-ConnectedTopFixed.defaultProps = {
-  // 表示要展示 搜索(search) / 增加文件(add)
-  type: 'add',
+  type: PropTypes.oneOf(['add-book', 'book-search']).isRequired,
 };
 
 const TopFixed = connect(mapStateToProps, mapDispatchToProps)(ConnectedTopFixed);
