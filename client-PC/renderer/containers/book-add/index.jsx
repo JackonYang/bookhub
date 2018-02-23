@@ -79,7 +79,7 @@ class ConnectedBookAdd extends React.Component {
   render() {
     return (
       <div className={styles.wrap}>
-        <TopFixed type="add" />
+        <TopFixed type="add-book" />
         <div className={styles.contentWrap}>
           <Table
             type="add"

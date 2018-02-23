@@ -1,39 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import styles from './search-input.scss';
 
-/* eslint-disable react/prefer-stateless-function */
-class SearchIput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchKey: '',
-    };
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-  }
-  handleSearchChange(event) {
-    this.setState({ searchKey: event.target.value });
-    this.props.onSearchChangeCb(event.target.value);
-  }
-  render() {
-    return (
-      <label className={`${styles.inputWrap} ${styles.search}`} htmlFor="key-input">
-        <input
-          id="key-input"
-          type="text"
-          value={this.state.searchKey}
-          onChange={this.handleSearchChange}
-        />
-      </label>
-    );
-  }
+import { updateQuery } from '../../actions';
+
+
+const mapStateToProps = state => ({
+  query: state.query,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateQuery: query => dispatch(updateQuery(query)),
+});
+
+function ConnectedSearchInput(props) {
+  return (
+    <label
+      className={`${styles.inputWrap} ${styles.search}`}
+      htmlFor="key-input"
+    >
+      <input
+        id="key-input"
+        type="text"
+        value={props.query}
+        onChange={event => props.updateQuery(event.target.value)}
+      />
+    </label>
+  );
 }
 
-SearchIput.propTypes = {
-  onSearchChangeCb: PropTypes.func,
+ConnectedSearchInput.propTypes = {
+  query: PropTypes.string.isRequired,
+  updateQuery: PropTypes.func.isRequired,
 };
 
-SearchIput.defaultProps = {
-  onSearchChangeCb: () => {},
-};
-export default SearchIput;
+const SearchInput = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearchInput);
+
+export default SearchInput;

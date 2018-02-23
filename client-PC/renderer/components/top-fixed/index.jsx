@@ -6,8 +6,6 @@ import styles from './top-fixed.scss';
 import SearchInput from '../search-input/index';
 import FileInput from '../file-input/index';
 
-import { updateQuery } from '../../actions';
-
 // https://github.com/electron/electron/issues/9920
 const { ipcRenderer } = window.require('electron');
 
@@ -16,8 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateQuery: query => dispatch(updateQuery(query)),
+const mapDispatchToProps = () => ({
 });
 
 function handleFileChange(path) {
@@ -26,6 +23,7 @@ function handleFileChange(path) {
 
 function handleClose(e) {
   e.preventDefault();
+  window.location.assign('#/');
 }
 
 function ConnectedTopFixed(props) {
@@ -37,18 +35,13 @@ function ConnectedTopFixed(props) {
   return (
     <div className={styles.wrap}>
       <button className={styles.close} onClick={handleClose} />
-      {props.type === 'add' ? fileInput() : <SearchInput onSearchChangeCb={props.updateQuery} />}
+      {props.type === 'add-book' ? fileInput() : <SearchInput />}
     </div>
   );
 }
 
 ConnectedTopFixed.propTypes = {
-  type: PropTypes.string,
-  updateQuery: PropTypes.func.isRequired,
-};
-ConnectedTopFixed.defaultProps = {
-  // 表示要展示 搜索(search) / 增加文件(add)
-  type: 'add',
+  type: PropTypes.oneOf(['add-book', 'book-search']).isRequired,
 };
 
 const TopFixed = connect(mapStateToProps, mapDispatchToProps)(ConnectedTopFixed);

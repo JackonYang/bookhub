@@ -53,7 +53,7 @@ function searchMore() {
 function ConnectedBookSearch(props) {
   return (
     <div className={styles.wrap}>
-      <TopFixed type="search" />
+      <TopFixed type="book-search" />
       <div className={styles.contentWrap}>
         <Table
           type="search"
