@@ -1,0 +1,30 @@
+@import "../../common/variables.scss";
+
+$barHeight: 44px;
+$filesWidth: 20px;
+$filesHeight: 17px;
+$barLeft: 50px;
+// global
+
+.wrap {
+  box-sizing: border-box;
+  height: 112px;
+  padding: 34px 70px;
+  font-size: $fontSize;
+  color: $fontColor;
+  background: $secondBg;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35);
+}
+
+.close {
+  display: inline-block;
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: no-repeat center url("../../assets/images/close.png");
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}

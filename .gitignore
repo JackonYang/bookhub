@@ -1,6 +1,7 @@
 #project ignore
 local_settings.py
 main.js
+bundle.js
 
 *.py[cod]
 
