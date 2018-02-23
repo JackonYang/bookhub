@@ -23,7 +23,7 @@ function handleFileChange(path) {
 
 function handleClose(e) {
   e.preventDefault();
-  window.location.assign('#/');
+  window.location.assign('#/recently-read');
 }
 
 function ConnectedTopFixed(props) {
