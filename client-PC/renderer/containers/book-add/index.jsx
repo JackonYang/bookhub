@@ -9,6 +9,7 @@ import styles from './book-add.scss';
 import {
   addFileInfo,
   addBookToRepo,
+  clearScanLog,
   selectAll,
   selectNone,
 } from '../../actions';
@@ -23,6 +24,7 @@ const mapDispatchToProps = dispatch => ({
   addBookToRepo: (md5, srcFullPath, bookMeta) => (
     dispatch(addBookToRepo(md5, srcFullPath, bookMeta))
   ),
+  clearScanLog: () => dispatch(clearScanLog()),
   selectAll: () => dispatch(selectAll()),
   selectNone: () => dispatch(selectNone()),
 });
@@ -71,6 +73,8 @@ class ConnectedBookAdd extends React.Component {
       }
       // log error is !bookMeta.md5 or !bookMeta.srcFullPath
     });
+    this.props.clearScanLog();
+    window.location.assign('#/');
   }
   render() {
     return (
@@ -106,6 +110,7 @@ ConnectedBookAdd.propTypes = {
   })).isRequired,
   addFileInfo: PropTypes.func.isRequired,
   addBookToRepo: PropTypes.func.isRequired,
+  clearScanLog: PropTypes.func.isRequired,
   selectAll: PropTypes.func.isRequired,
   selectNone: PropTypes.func.isRequired,
 };

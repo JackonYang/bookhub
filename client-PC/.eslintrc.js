@@ -33,6 +33,7 @@ module.exports = {
       'js': 'never',
       'jsx': 'never'
     }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     'arrow-parens': ['error', 'as-needed'],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,

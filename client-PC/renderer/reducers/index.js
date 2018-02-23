@@ -4,6 +4,7 @@ import path from 'path';
 import {
   BOOK_SCANNED,
   ADD_BOOK_TO_REPO,
+  CLEAR_SCAN_LOG,
   SELECT_ALL,
   SELECT_NONE,
   TOGGLE_SELECT,
@@ -48,6 +49,7 @@ export default (state = initialState, action) => {
 
         newState.scanLog.push({
           md5: action.md5,
+          isSelected: true,
           titleDisplay,
           extname,
           sizeBytes,
@@ -77,6 +79,11 @@ export default (state = initialState, action) => {
       }
 
       return newState;
+    }
+    case CLEAR_SCAN_LOG: {
+      return Object.assign({}, state, {
+        scanLog: [],
+      });
     }
 
     // Select for AddBooks Page

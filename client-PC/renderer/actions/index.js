@@ -4,6 +4,7 @@
 
 export const BOOK_SCANNED = 'BOOK_SCANNED';
 export const ADD_BOOK_TO_REPO = 'ADD_BOOK_TO_REPO';
+export const CLEAR_SCAN_LOG = 'CLEAR_SCAN_LOG';
 // Select for AddBooks
 export const SELECT_ALL = 'SELECT_ALL';
 export const SELECT_NONE = 'SELECT_NONE';
@@ -25,6 +26,10 @@ export function addBookToRepo(md5, srcFullPath, bookMeta) {
     srcFullPath,
     bookMeta,
   };
+}
+
+export function clearScanLog() {
+  return { type: CLEAR_SCAN_LOG };
 }
 
 export function selectAll() {

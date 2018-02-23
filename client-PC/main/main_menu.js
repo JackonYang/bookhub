@@ -21,7 +21,7 @@ function createMainMenu(
         },
         {
           label: 'Search Books',
-          accelerator: process.platform === 'darwin' ? 'Command+F' : 'Ctrl+F',
+          accelerator: process.platform === 'darwin' ? 'Command+H' : 'Ctrl+H',
           click() {
             switchToSearchBooks();
           },

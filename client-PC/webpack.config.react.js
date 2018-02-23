@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    app: ['webpack/hot/dev-server', './renderer//react_entry.jsx'],
+    app: ['webpack/hot/dev-server', './renderer/index.js'],
   },
   // https://jlongster.com/Backend-Apps-with-Webpack--Part-I
   target: 'node',

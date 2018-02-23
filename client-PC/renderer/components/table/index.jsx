@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import styles from './table.scss';
-// import radioIcon from '../../../assets/images/radio-icon.png';
-// import radioIconChecked from '../../../assets/images/right.png';
 import Trow from './trow/index';
 
 const mapStateToProps = (state, ownProps) => ({

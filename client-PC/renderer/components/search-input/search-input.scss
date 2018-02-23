@@ -28,7 +28,7 @@ $barLeft: 50px;
     left: 18px;
     vertical-align: middle;
   }
- 
+
 }
 
 .search {
@@ -36,7 +36,7 @@ $barLeft: 50px;
     width: $searchWidth;
     height: $searchHeight;
     margin-top: -($searchHeight/2);
-    background: no-repeat center url("../../../assets/images/magnify.png");
+    background: no-repeat center url("../../assets/images/magnify.png");
   }
 
   input {
