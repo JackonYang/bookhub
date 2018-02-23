@@ -7,6 +7,7 @@ function createMainMenu(
   switchToAddBooks,
   switchToPreferences,
   switchToSearchBooks,
+  switchToRecentlyReads,
 ) {
   const mainMenuTemplate = [
     {
@@ -24,6 +25,13 @@ function createMainMenu(
           accelerator: process.platform === 'darwin' ? 'Command+H' : 'Ctrl+H',
           click() {
             switchToSearchBooks();
+          },
+        },
+        {
+          label: 'Recently Read',
+          accelerator: process.platform === 'darwin' ? 'Command+R' : 'Ctrl+R',
+          click() {
+            switchToRecentlyReads();
           },
         },
         {

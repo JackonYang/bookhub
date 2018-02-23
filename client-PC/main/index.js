@@ -27,6 +27,10 @@ function switchToPreferences() {
   mainWindow.webContents.send('windown:location:change', '#/preferences');
 }
 
+function switchToRecentlyReads() {
+  mainWindow.webContents.send('windown:location:change', '#/recently-read');
+}
+
 // Listen for app to be ready
 app.on('ready', () => {
   mainWindow = createMainWindow();
@@ -50,6 +54,7 @@ app.on('ready', () => {
     switchToAddBooks,
     switchToPreferences,
     switchToSearchBooks,
+    switchToRecentlyReads,
   ));
 });
 
