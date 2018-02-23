@@ -1,0 +1,36 @@
+@import '../../common/variables.scss';
+
+.wrap {
+  h1 {
+    margin-top: 22px;
+    line-height: 60px;
+    // font-family: PingFangSC-Semibold;
+    color: #000000;
+    font-size: 42.39px;
+    letter-spacing: -1.93px;
+  }
+}
+
+.contentWrap {
+  padding-left: $paddingLeft;
+}
+.sortRole {
+  color: $secondColor;
+  margin: 45px 0 63px 0;
+
+  button {
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 32px;
+    color: $secondColor;
+
+    &:hover,
+    &:active,
+    &.active {
+      color: $secondActive;
+    }
+  }
+}
+
+
