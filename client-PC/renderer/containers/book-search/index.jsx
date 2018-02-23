@@ -1,11 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import TopFixed from '../../components/top-fixed/index';
 import Table from '../../components/table/index';
 import styles from './book-search.scss';
 // import { addBookMeta } from '../../actions';
+
+function filterBooks(fullData, query) {
+  if (!query) {
+    return fullData;
+  }
+  return fullData.filter(t => t.titleDisplay.toLowerCase().includes(query));
+}
+
+const mapStateToProps = (state, ownProps) => ({
+  bookList: filterBooks(state.bookList, state.query),
+  ...ownProps,
+});
+
+const mapDispatchToProps = () => ({
+});
 
 const colTitles = [
   {
@@ -30,45 +45,39 @@ const colTitles = [
   // },
 ];
 
-/* eslint-disable react/prefer-stateless-function */
-class BookSearch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.store = props.store;
-  }
-  searchMore() {
-    console.log('searchMore', this);
-  }
-  render() {
-    return (
-      <div className={styles.wrap}>
-        <TopFixed type="search" />
-        <div className={styles.contentWrap}>
-          <Table
-            type="search"
-            colTitles={colTitles}
-            bookList={this.store.getState().bookList}
-          />
-        </div>
-        <div className={styles.operationGrop}>
-          <button className={styles.addHub} onClick={this.searchMore}>搜索更多</button>
-        </div>
-      </div>
-    );
-  }
+function searchMore() {
+  console.log('searchMore');
 }
 
-BookSearch.propTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-  }).isRequired,
+/* eslint-disable react/prefer-stateless-function */
+function ConnectedBookSearch(props) {
+  return (
+    <div className={styles.wrap}>
+      <TopFixed type="search" />
+      <div className={styles.contentWrap}>
+        <Table
+          type="search"
+          colTitles={colTitles}
+          bookList={props.bookList}
+        />
+      </div>
+      <div className={styles.operationGrop}>
+        <button className={styles.addHub} onClick={searchMore}>Search More</button>
+      </div>
+    </div>
+  );
+}
+
+ConnectedBookSearch.propTypes = {
+  bookList: PropTypes.arrayOf(PropTypes.shape({
+    md5: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 // const mapStateToProps = state => {
 //   return { articles: state.articles };
 // };
 
-// const BookSearch = connect(mapStateToProps)(ConnectedBookSearch);
+const BookSearch = connect(mapStateToProps, mapDispatchToProps)(ConnectedBookSearch);
 
 export default BookSearch;
