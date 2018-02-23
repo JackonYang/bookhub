@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import BookAdd from './containers/book-add/index';
 import BookSearch from './containers/book-search/index';
 import Preferences from './containers/preferences/index';
+import RecentlyRead from './containers/recently-read/index';
+
 /* eslint-disable import/extensions */
 import './common/reset.css?raw';
 import styles from './entry.scss';
@@ -36,6 +38,11 @@ const routes = [
     path: '/preferences',
     sidebar: () => <div>设置</div>,
     main: Preferences,
+  },
+  {
+    path: '/recently-read',
+    sidebar: () => <div>最近阅读</div>,
+    main: RecentlyRead,
   },
 ];
 
