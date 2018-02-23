@@ -26,7 +26,7 @@ class RecentRead extends React.Component {
     const btns = BtnsText.map(btn => <button key={btn} className={this.state.type === btn ? styles.active : ''} onClick={() => this.handleSwitchList(btn)} >{btn}</button>);
     return (
       <div className={styles.wrap}>
-        <TopFixed type="search" />
+        <TopFixed type="book-search" />
         <div className={styles.contentWrap}>
           <h1>Recently Read</h1>
           <div className={styles.sortRole}>

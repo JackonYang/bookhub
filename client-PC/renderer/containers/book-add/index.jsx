@@ -74,7 +74,7 @@ class ConnectedBookAdd extends React.Component {
       // log error is !bookMeta.md5 or !bookMeta.srcFullPath
     });
     this.props.clearScanLog();
-    window.location.assign('#/');
+    window.location.assign('#/recently-read');
   }
   render() {
     return (
