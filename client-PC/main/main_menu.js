@@ -22,14 +22,14 @@ function createMainMenu(
         },
         {
           label: 'Search Books',
-          accelerator: process.platform === 'darwin' ? 'Command+H' : 'Ctrl+H',
+          accelerator: process.platform === 'darwin' ? 'Command+l' : 'Ctrl+l',
           click() {
             switchToSearchBooks();
           },
         },
         {
           label: 'Recently Read',
-          accelerator: process.platform === 'darwin' ? 'Command+R' : 'Ctrl+R',
+          accelerator: process.platform === 'darwin' ? 'Command+h' : 'Ctrl+h',
           click() {
             switchToRecentlyReads();
           },
