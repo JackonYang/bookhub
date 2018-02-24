@@ -6,10 +6,10 @@ import {
 import url from 'url';
 import path from 'path';
 
+import createBackgroundWindow from 'background_window';
+
 import createMainWindow from './main_window';
 import createMainMenu from './main_menu';
-
-import createBackgroundWindow from '../background/background_window';
 
 
 let mainWindow;

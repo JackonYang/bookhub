@@ -17,6 +17,13 @@ module.exports = {
     __dirname: false,
     __filename: false
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'background'),
+      'node_modules',
+    ],
+  },
   module: {
     loaders: [
       {
