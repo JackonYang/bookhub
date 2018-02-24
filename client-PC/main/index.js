@@ -38,7 +38,7 @@ app.on('ready', () => {
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'public/index.html'),
     protocol: 'file:',
-    hash: '#/',
+    hash: '#/recently-read',
     slashes: false,
   }));
 
@@ -74,6 +74,6 @@ ipcMain.on('scan:error', (e, msg) => {
   console.log(msg);
 });
 
-ipcMain.on('scan:file:found', (e, fileInfo) => {
-  mainWindow.webContents.send('scan:file:found', fileInfo);
+ipcMain.on('scan:file:found', (e, fileMetaInfo) => {
+  mainWindow.webContents.send('scan:file:found', fileMetaInfo);
 });

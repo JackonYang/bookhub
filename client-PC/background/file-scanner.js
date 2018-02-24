@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const wildcard = require('wildcard');
-// const filesize = require('filesize');
 const md5File = require('md5-file');
 
 
