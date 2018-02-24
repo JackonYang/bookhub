@@ -4,7 +4,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import BookAdd from 'containers/book-add/index';
 import BookSearch from 'containers/book-search/index';
@@ -60,10 +60,6 @@ const routes = [
 // }
 
 class Index extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-  }
   componentDidMount() {
     ipcRenderer.on('windown:location:change', (e, newLocation) => {
       window.location.assign(newLocation);
@@ -78,7 +74,7 @@ class Index extends React.Component {
               key={route.path}
               exact={route.exact}
               path={route.path}
-              render={() => <route.main store={this.props.store} />}
+              render={() => <route.main />}
             />))}
         </div>
       </Router>
@@ -86,18 +82,10 @@ class Index extends React.Component {
   }
 }
 
-Index.propTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-
 function render() {
   ReactDOM.render(
     <Provider store={store}>
-      <Index store={store} />
+      <Index />
     </Provider>,
     document.getElementById('app'),
   );
