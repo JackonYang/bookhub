@@ -83,7 +83,7 @@ function ConnectedTableRow(props) {
 /* eslint-disable react/forbid-prop-types */
 ConnectedTableRow.propTypes = {
   row: PropTypes.object.isRequired,
-  type: PropTypes.oneOf(['add', 'search']).isRequired,
+  type: PropTypes.oneOf(['add-book', 'book-search']).isRequired,
   idx: PropTypes.number.isRequired,
   thArrays: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleSelect: PropTypes.func.isRequired,

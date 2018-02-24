@@ -18,6 +18,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'background'),
+      path.resolve(__dirname, 'renderer'),
+      'node_modules',
+    ],
     alias: {
       '@': path.join(__dirname, 'renderer/'),
       '@p': path.join(__dirname, 'renderer/', 'components'),

@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './preferences.scss';
 
-import FileIput from '../../components/file-input/index';
-import Avatar from '../../components/avatar/index';
+import FileIput from 'components/file-input/index';
+import Avatar from 'components/avatar/index';
+
+import styles from './preferences.scss';
 
 /* eslint-disable react/prefer-stateless-function */
 class Preferences extends React.Component {
