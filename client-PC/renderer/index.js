@@ -1,22 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route } from 'react-router-dom';
+
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import { HashRouter as Router, Route, Link } from 'react-router-dom';
-
-import BookAdd from './containers/book-add/index';
-import BookSearch from './containers/book-search/index';
-import Preferences from './containers/preferences/index';
-import RecentlyRead from './containers/recently-read/index';
+import BookAdd from 'containers/book-add/index';
+import BookSearch from 'containers/book-search/index';
+import Preferences from 'containers/preferences/index';
+import RecentlyRead from 'containers/recently-read/index';
 
 /* eslint-disable import/extensions */
-import './common/reset.css?raw';
-import styles from './entry.scss';
+import 'common/reset.css?raw';
+import styles from 'entry.scss';
 
-import rootReducer from './reducers';
+import rootReducer from 'reducers';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -26,22 +25,22 @@ const routes = [
   {
     path: '/',
     exact: true,
-    sidebar: () => <div>图书搜索</div>,
+    sidebar: () => <div>Search Books</div>,
     main: BookSearch,
   },
   {
     path: '/add-books',
-    sidebar: () => <div>添加书籍</div>,
+    sidebar: () => <div>Add Books</div>,
     main: BookAdd,
   },
   {
     path: '/preferences',
-    sidebar: () => <div>设置</div>,
+    sidebar: () => <div>Preferences</div>,
     main: Preferences,
   },
   {
     path: '/recently-read',
-    sidebar: () => <div>最近阅读</div>,
+    sidebar: () => <div>Recently Read</div>,
     main: RecentlyRead,
   },
 ];

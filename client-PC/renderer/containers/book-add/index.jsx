@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import TopFixed from '../../components/top-fixed/index';
-import Table from '../../components/table/index';
-import styles from './book-add.scss';
+import TopFixed from 'components/top-fixed/index';
+import Table from 'components/table/index';
 
 import {
   addFileInfo,
@@ -12,7 +11,9 @@ import {
   clearScanLog,
   selectAll,
   selectNone,
-} from '../../actions';
+} from 'actions';
+
+import styles from './book-add.scss';
 
 const mapStateToProps = (state, ownProps) => ({
   bookList: state.scanLog,
@@ -82,7 +83,7 @@ class ConnectedBookAdd extends React.Component {
         <TopFixed type="add-book" />
         <div className={styles.contentWrap}>
           <Table
-            type="add"
+            type="add-book"
             colTitles={colTitles}
             bookList={this.props.bookList}
           />

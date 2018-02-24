@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import TopFixed from '../../components/top-fixed/index';
-import Table from '../../components/table/index';
+import TopFixed from 'components/top-fixed/index';
+import Table from 'components/table/index';
+
 import styles from './book-search.scss';
-// import { addBookMeta } from '../../actions';
 
 function filterBooks(fullData, query) {
   if (!query) {
@@ -45,25 +45,24 @@ const colTitles = [
   // },
 ];
 
-function searchMore() {
-  console.log('searchMore');
-}
+// function searchMore() {
+//   console.log('searchMore');
+// }
 
-/* eslint-disable react/prefer-stateless-function */
 function ConnectedBookSearch(props) {
   return (
     <div className={styles.wrap}>
       <TopFixed type="book-search" />
       <div className={styles.contentWrap}>
         <Table
-          type="search"
+          type="book-search"
           colTitles={colTitles}
           bookList={props.bookList}
         />
       </div>
-      <div className={styles.operationGrop}>
+      {/* <div className={styles.operationGrop}>
         <button className={styles.addHub} onClick={searchMore}>Search More</button>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -73,10 +72,6 @@ ConnectedBookSearch.propTypes = {
     md5: PropTypes.string.isRequired,
   })).isRequired,
 };
-
-// const mapStateToProps = state => {
-//   return { articles: state.articles };
-// };
 
 const BookSearch = connect(mapStateToProps, mapDispatchToProps)(ConnectedBookSearch);
 
