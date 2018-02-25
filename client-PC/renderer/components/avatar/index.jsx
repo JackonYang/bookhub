@@ -1,7 +1,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
+
+import AvatarPic from 'assets/images/avatar.jpg';
+
 import styles from './avatar.scss';
-import AvatarPic from '../../assets/images/avatar.jpg';
 
 /* eslint-disable react/prefer-stateless-function */
 class Avatar extends React.Component {
