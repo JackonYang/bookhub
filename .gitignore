@@ -2,6 +2,7 @@
 local_settings.py
 main.js
 bundle.js
+bookhub-metainfo.db
 
 *.py[cod]
 
