@@ -42,6 +42,12 @@ app.on('ready', () => {
     slashes: false,
   }));
 
+  mainWindow.on('close', e => {
+    e.preventDefault();
+    mainWindow.webContents.send('windown:close:dump');
+    mainWindow.destroy(); // wait until data dumped
+  });
+
   // Quit app when closed
   mainWindow.on('closed', () => {
     app.quit();
