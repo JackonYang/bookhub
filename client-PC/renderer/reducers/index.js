@@ -14,8 +14,10 @@ import {
   UPDATE_QUERY,
 } from 'actions';
 
+const { remote } = window.require('electron');
+
 let initialState;
-const dbFile = 'bookhub-metainfo.db';
+const dbFile = path.join(remote.app.getPath('userData'), 'bookhub-metainfo.db');
 
 if (fs.existsSync(dbFile)) {
   initialState = jsonfile.readFileSync(dbFile);

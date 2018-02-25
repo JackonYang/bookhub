@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 // import PropTypes from 'prop-types';
 
+import path from 'path';
 import jsonfile from 'jsonfile';
 
 import BookAdd from 'containers/book-add/index';
@@ -19,9 +20,9 @@ import styles from 'entry.scss';
 
 import rootReducer from 'reducers';
 
-const { ipcRenderer } = window.require('electron');
+const { remote, ipcRenderer } = window.require('electron');
 
-const dbFile = 'bookhub-metainfo.db';
+const dbFile = path.join(remote.app.getPath('userData'), 'bookhub-metainfo.db');
 
 const store = createStore(rootReducer);
 
