@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { execFile } from 'child_process';
+
+import utils from 'common/utils';
+import radioIcon from 'assets/images/radio-icon.png';
+import radioIconChecked from 'assets/images/right.png';
+import star from 'assets/images/star@3x.png';
+import starLighted from 'assets/images/star-lighted@3x.png';
 
 import styles from './trow.scss';
-import radioIcon from '../../../assets/images/radio-icon.png';
-import radioIconChecked from '../../../assets/images/right.png';
-import star from '../../../assets/images/star@3x.png';
-import starLighted from '../../../assets/images/star-lighted@3x.png';
 
 import { toggleSelect, toggleStar } from '../../../actions';
 
@@ -19,18 +20,6 @@ const mapDispatchToProps = dispatch => ({
   toggleSelect: idx => dispatch(toggleSelect(idx)),
   toggleStar: idx => dispatch(toggleStar(idx)),
 });
-
-function openFile(srcPath) {
-  const platformCmd = {
-    win32: 'start', // win7 32bit, win7 64bit
-    cygwin: 'start', // cygwin
-    linux2: 'xdg-open', // ubuntu 12.04 64bit
-    darwin: 'open', // Mac
-  };
-  return () => {
-    execFile(platformCmd[process.platform], [srcPath[0]]);
-  };
-}
 
 function ConnectedTableRow(props) {
   const {
@@ -73,7 +62,7 @@ function ConnectedTableRow(props) {
     <div
       key={row.md5}
       className={styles.row}
-      onDoubleClick={openFile(row.srcFullPath)}
+      onDoubleClick={utils.openFile(row.srcFullPath)}
     >
       {tds}
     </div>
