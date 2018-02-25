@@ -34,7 +34,7 @@ function ConnectedTopFixed(props) {
 
   return (
     <div className={styles.wrap}>
-      <button className={styles.close} onClick={handleClose} />
+      {props.hasClose ? <button className={styles.close} onClick={handleClose} /> : null}
       {props.type === 'add-book' ? fileInput() : <SearchInput />}
     </div>
   );
@@ -42,6 +42,11 @@ function ConnectedTopFixed(props) {
 
 ConnectedTopFixed.propTypes = {
   type: PropTypes.oneOf(['add-book', 'book-search']).isRequired,
+  hasClose: PropTypes.bool,
+};
+
+ConnectedTopFixed.defaultProps = {
+  hasClose: true,
 };
 
 const TopFixed = connect(mapStateToProps, mapDispatchToProps)(ConnectedTopFixed);

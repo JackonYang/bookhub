@@ -3,6 +3,7 @@ import React from 'react';
 
 import TopFixed from 'components/top-fixed/index';
 import BookList from 'components/book-list/index';
+import Avatar from 'components/avatar/index';
 
 import styles from './recently-read.scss';
 
@@ -25,7 +26,8 @@ function RecentRead() {
   // ));
   return (
     <div className={styles.wrap}>
-      <TopFixed type="book-search" />
+      <Avatar />
+      <TopFixed type="book-search" hasClose={false} />
       <div className={styles.contentWrap}>
         <h1>Recently Read</h1>
         {/* <div className={styles.sortRole}>
