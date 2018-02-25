@@ -40,10 +40,10 @@ function ConnectedTableRow(props) {
     type,
   } = props;
   // 适配两种不同 type 的 row
-  const darkSelect = type === 'search' ? star : radioIcon;
-  const lightedSelect = type === 'search' ? starLighted : radioIconChecked;
-  const isSelected = type === 'search' ? row.isStared : row.isSelected;
-  const handleSelect = type === 'search' ? props.toggleStar : props.toggleSelect;
+  const darkSelect = type === 'book-search' ? star : radioIcon;
+  const lightedSelect = type === 'book-search' ? starLighted : radioIconChecked;
+  const isSelected = type === 'book-search' ? row.isStared : row.isSelected;
+  const handleSelect = type === 'book-search' ? props.toggleStar : props.toggleSelect;
 
   const tds = thArrays.map((th, i) => (
     <div
