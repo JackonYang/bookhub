@@ -1,5 +1,7 @@
 import filesize from 'filesize';
 import path from 'path';
+import fs from 'fs';
+import jsonfile from 'jsonfile';
 
 import {
   BOOK_SCANNED,
@@ -10,13 +12,20 @@ import {
   TOGGLE_SELECT,
   TOGGLE_STAR,
   UPDATE_QUERY,
-} from '../actions';
+} from 'actions';
 
-const initialState = {
-  bookList: [],
-  query: '',
-  scanLog: [],
-};
+let initialState;
+const dbFile = 'bookhub-metainfo.db';
+
+if (fs.existsSync(dbFile)) {
+  initialState = jsonfile.readFileSync(dbFile);
+} else {
+  initialState = {
+    bookList: [],
+    query: '',
+    scanLog: [],
+  };
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {

@@ -6,6 +6,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 // import PropTypes from 'prop-types';
 
+import jsonfile from 'jsonfile';
+
 import BookAdd from 'containers/book-add/index';
 import BookSearch from 'containers/book-search/index';
 import Preferences from 'containers/preferences/index';
@@ -18,6 +20,8 @@ import styles from 'entry.scss';
 import rootReducer from 'reducers';
 
 const { ipcRenderer } = window.require('electron');
+
+const dbFile = 'bookhub-metainfo.db';
 
 const store = createStore(rootReducer);
 
@@ -63,6 +67,9 @@ class Index extends React.Component {
   componentDidMount() {
     ipcRenderer.on('windown:location:change', (e, newLocation) => {
       window.location.assign(newLocation);
+    });
+    ipcRenderer.on('windown:close:dump', () => {
+      jsonfile.writeFileSync(dbFile, store.getState());
     });
   }
   render() {

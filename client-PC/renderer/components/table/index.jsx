@@ -63,7 +63,7 @@ class ConnectedTable extends React.PureComponent {
       </div>
     ));
 
-    if (this.props.type === 'search') { // search 页面
+    if (this.props.type === 'book-search') { // search 页面
       ths.unshift((<div
         key="star"
         td-role="star"
@@ -97,7 +97,7 @@ class ConnectedTable extends React.PureComponent {
 }
 
 ConnectedTable.propTypes = {
-  type: PropTypes.oneOf(['add', 'search']).isRequired,
+  type: PropTypes.oneOf(['add-book', 'book-search']).isRequired,
   colTitles: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
     file: PropTypes.string.isRequired,
