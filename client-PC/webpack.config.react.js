@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public/built'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:8080/built/'
+    publicPath: './built/'
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
