@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import utils from 'common/utils';
+import { toggleSelect, toggleStar } from 'actions';
+
 import radioIcon from 'assets/images/radio-icon.png';
 import radioIconChecked from 'assets/images/right.png';
 import star from 'assets/images/star@3x.png';
 import starLighted from 'assets/images/star-lighted@3x.png';
 
 import styles from './trow.scss';
-
-import { toggleSelect, toggleStar } from '../../../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import SearchInput from 'components/search-input/index';
+import FileInput from 'components/file-input/index';
+
 import styles from './top-fixed.scss';
-import SearchInput from '../search-input/index';
-import FileInput from '../file-input/index';
 
 // https://github.com/electron/electron/issues/9920
 const { ipcRenderer } = window.require('electron');

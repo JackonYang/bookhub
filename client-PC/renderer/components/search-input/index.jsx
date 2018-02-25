@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { updateQuery } from 'actions';
+
 import styles from './search-input.scss';
-
-import { updateQuery } from '../../actions';
-
 
 const mapStateToProps = state => ({
   query: state.query,
