@@ -3,11 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import utils from 'common/utils';
+import bookDefault from 'assets/images/book-default.png';
+
 import styles from './book-list.scss';
-import bookDefault from '../../../assets/images/book-default.png';
+
+function filterBooks(fullData, query) {
+  if (!query) {
+    return fullData;
+  }
+  return fullData.filter(t => t.titleDisplay.toLowerCase().includes(query));
+}
 
 const mapStateToProps = (state, ownProps) => ({
-  bookList: state.bookList,
+  bookList: filterBooks(state.bookList, state.query),
   ...ownProps,
 });
 
